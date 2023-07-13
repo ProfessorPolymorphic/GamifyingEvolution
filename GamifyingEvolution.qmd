@@ -466,50 +466,101 @@ Example: Genetic Drift and Effective Population Size
 ```{r}
 Twin2<- read.csv("Twin/Gene_Write_File2.csv")
 Twin1<- read.csv("Twin/geneWriteFile.csv")
-
-Twin2Babies <- Twin2%>%
-  group_by(Slime.ID, Wave.Number)%>%
-  summarize(Babies = n(Parent.One=Slime.ID))
+Twin3<- read.csv("Twin/geneWriteFile3.csv")
 
 
-P1Babies <- as.data.frame(table(as.factor(d$P1ID)))
-  colnames(P1Babies)<-c("ID", "Babies1")
-  P2Babies <- as.data.frame(table(as.factor(d$P2ID)))
-  colnames(P2Babies)<-c("ID", "Babies2")
-  d1<-merge(d,P1Babies, by = "ID", all=TRUE )
-  d1[is.na(d1)] <- 0
-  d2<-merge(d1, P2Babies, by = "ID", all=TRUE)
-  d2[is.na(d2)] <- 0
-  
-  d2$Offspring <-d2$Babies1+d2$Babies2
-  d2$relfit <- d2$Offspring/2
-  d2<-subset(d2, ID > -1)
+df_parents <- Twin3 %>%
+  select(Parent.One, Parent.Two, Wave.Number) %>%
+  pivot_longer(cols = -Wave.Number, names_to = "parent_type", values_to = "parent_id")
+
+# Count the number of offspring for each parent
+offspring_counts <- df_parents %>%
+  group_by(parent_id, Wave.Number) %>%
+  summarise(offspring_count = n(), .groups = "drop")
+
+offspring_counts <- na.omit(offspring_counts)
 
 
-ggplot(Twin2, aes(x=Wave.Number, y= Player.Distance.Fitness))+
-  geom_point(aes(x=Wave.Number, y= Player.Distance.Fitness, color = Player.Distance.Fitness),
-             size=0.5, alpha = 0.5)+
-  geom_smooth()+
-  scale_color_gradient(low = muted("blue"),
-
-  high = "red",
-
-  space = "Lab",
-  na.value = "grey50",
-  guide = "colourbar",
-  aesthetics = "colour")
+offspring_counts<- rename(offspring_counts, Slime.ID = parent_id)
+offspring_counts <- offspring_counts %>%
+  filter(!is.na(Slime.ID)) %>%
+  mutate(Slime.ID = as.numeric(Slime.ID))
 
 
-ggplot(Twin2, aes(x=Wave.Number, y= Speed.Trait))+
-  geom_point(aes(x=Wave.Number, y= Speed.Trait, color = Main.Type))+
-  geom_smooth()
+Twin3 <- Twin3 %>%
+  left_join(offspring_counts, by = c("Wave.Number", "Slime.ID"))%>%
+  replace_na(list(offspring_count = 0))%>%
+  select(-X)
 
 
-ggplot(Twin2, aes(x=Wave.Number, y= Main.Resistance.Trait))+
-  geom_point(aes(x=Wave.Number, y= Main.Resistance.Trait, color = Main.Type),
-             size=0.5, alpha = 0.5)+
+Twin3counts<-Twin3%>%
+  group_by(Main.Type, Wave.Number)%>%
+  summarise(mean_Speed = mean(Speed.Trait, na.rm = TRUE), 
+            mean_Resist = mean(Main.Resistance.Trait, na.rm = TRUE), 
+            count = n())
+
+ggplot(Twin3counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))) +
+  geom_col(position = "stack") +
+  labs(x = "Generation", y = "Count", fill = "Main Slime Type") +
+  theme_minimal()
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Main.Resistance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Main.Resistance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
   facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Secondary.Resistance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Secondary.Resistance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Tower.Attraction.Trait))+
+  geom_point(aes(x=Wave.Number, y= Tower.Attraction.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Speed.Trait))+
+  geom_point(aes(x=Wave.Number, y= Speed.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Turn.Rate.Trait))+
+  geom_point(aes(x=Wave.Number, y= Turn.Rate.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Slime.View.Range.Trait))+
+  geom_point(aes(x=Wave.Number, y= Slime.View.Range.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Tower.View.Range.Trait))+
+  geom_point(aes(x=Wave.Number, y= Tower.View.Range.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
+ggplot(Twin3, aes(x=Wave.Number, y= Player.Distance.Fitness))+
+  geom_point(aes(x=Wave.Number, y= Player.Distance.Fitness, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)
+
 
 Twin2Lightning <- Twin2 %>%
   filter(Main.Type == "Lightning" | Secondary.Type == "Lightning")
