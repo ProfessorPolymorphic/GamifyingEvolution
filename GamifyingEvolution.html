@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.220">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Gamifying Evolution</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="GamifyingEvolution_files/libs/clipboard/clipboard.min.js"></script>
+<script src="GamifyingEvolution_files/libs/quarto-html/quarto.js"></script>
+<script src="GamifyingEvolution_files/libs/quarto-html/popper.min.js"></script>
+<script src="GamifyingEvolution_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="GamifyingEvolution_files/libs/quarto-html/anchor.min.js"></script>
+<link href="GamifyingEvolution_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="GamifyingEvolution_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="GamifyingEvolution_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="GamifyingEvolution_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="GamifyingEvolution_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Gamifying Evolution</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="evolution-and-public-acceptance-of-science" class="level3">
+<h3 class="anchored" data-anchor-id="evolution-and-public-acceptance-of-science">Evolution and Public Acceptance of Science</h3>
+<p>Of all the topics that represent public misconceptions about science, evolution is perhaps the most vexing to solve (though climate change is emerging as a new front runner in this dubious race). Acceptance of evolution is particularly low in the United States [19], and educators often face direct opposition to teaching evolution in their classrooms. The many opponents of evolution also intentionally spread demonstrably false information and have powerful lobbying capabilities.</p>
+<p>Evolution is a concept that can be difficult to present in a formal learning setting but is very understandable when directly observed. Engaging games and simulations could therefore be particularly beneficial in helping to reach students and in correcting pervasive public misconceptions about the discipline.</p>
+<p>Previous “evolutionary” games Game designers have long recognized the potential of evolution to SELL games [20]. Frustratingly, the most successful commercial games that emphasize evolution (for example, Spore™, Evolve™, and Pokemon™ Evolution) aren’t evolutionary at all. Most of these games insert player choice into the “evolutionary” process, allowing for example, the player’s character to choose whether to “evolve” a beak, or a lightning attack. This approach inadvertently represents intelligent design, a pseudoscientific reskinning of young earth creationism. These games, which use evolution as a marketing angle, potentially exacerbate the public’s confusion about evolution and reinforce existing misconceptions.</p>
+<p>Intelligent Design: An Evolutionary Sandbox (available on Steam) is an evolutionary game in which players create species that are placed in an evolving ecosystem - once released, the creatures continue to evolve on their own. Niche (available on Steam) is a turn-based game in which the player breeds members of a species to avoid extinction. Although they have not been released commercially, the game NeuroEvolving Robotic Operatives (NERO) and a spin-off, EvoCommander, are also examples of games that incorporate evolution [23, 24, 25]. In Galactic Arms Race evolution is used to procedurally generate new weapons for the player [20], and evolutionary computation researchers have successfully tied the evolution of evolved fire patterns in Galactic Arms Race to the background music [26, 27].</p>
+</section>
+<section id="polymorphic-games" class="level3">
+<h3 class="anchored" data-anchor-id="polymorphic-games">Polymorphic Games</h3>
+<p>Polymorphic Games is an interdisciplinary game studio on the UI campus. Polymorphic Games employs a unique development approach, in which undergraduates from a wide range of disciplines (including Computer Science, Virtual Technology and Design, Biology, English, Theater, Education, Business, and Music) collaborate to create video games that incorporate evolution as a core game mechanic. We were motivated to create Polymorphic Games by the idea that evolution makes a game better – more compelling and more fun – because the game adapts to the player. We argue that this approach represents a positive combination of STEM engagement and informal learning. Given a compelling game, players are inherently motivated to learn the underlying evolutionary concepts in order to succeed at the game objectives. Thus, the goal of Polymorphic Games is to make fun and compelling games, and to use established tools (e.g.&nbsp;in-game achievements, Easter eggs, challenges, and missions) to increase the games’ educational impact.</p>
+<p>Polymorphic Games’ first project was Darwin’s Demons, a “space shooter” game inspired by Space Invaders. In Darwin’s Demons, the player battles an evolving population of aliens (Figure 1). The enemies’ traits are encoded by a digital genome of real numbers, and the fittest enemies reproduce to create the next generation causing the population to adapt to the player. The name of the game was inspired by the Darwinian Demon metaphor, which describes an organism that can evolve without constraint. In Darwin’s Demons, each trait can evolve independently (there are no evolutionary tradeoffs), meaning that eventually the player will lose. The objective (like in Space Invaders) is to beat the high score. Players can choose from a wide range of ships and secondary equipment, which increases player interest and serves to drive evolution along different trajectories [28]. Players can upgrade their equipment between generations of enemies, which are the evolutionary equivalent of waves in a typical video game. The up-grade screen includes data on the evolutionary trajectory of the game (Figure 2). The game saves the genome of every creature as a .csv file, allowing experimentation and in-depth analysis of the creatures’ evolution in response to player strategy. Development on Darwin’s Demons began in May 2016, and the game was released for sale on Valve’s Steam platform on February 13, 2017 (the Monday after Darwin Day). To our knowledge, Darwin’s Demons was the first commercially released game to fully feature evolving enemies.</p>
+<p>Figure 1: Left: A screenshot from Polymorphic Game’s first commercial video game Darwin’s Demons, in which the player battles an evolving population of enemies. Right: The upgrade screen in Darwin’s Demons, which graphs the evolution of game traits.</p>
+<p>Polymorphic Games’ second commercial release was Project Hastur, an evolutionary tower defense game. Project Hastur features fully realized 3D game environments and is the first implementation of our evolutionary procedural generation approach. All the game enemies are encoded by a digital genome, and mutations of this genome can produce a startling array of phenotypes. In Project Hastur, the player can play through a campaign that features 14 unique maps that unlock a series of defensive capabilities. The game features its own story, a wide variety of upgrade choices, and many fun “Easter Eggs” about evolution. In this game, our student developers created a method for evolutionary procedural generation of game enemies. All of the creatures in the game have the same architecture of their digital genomes (62 genes encoded by real numbers). These genomes are converted in the Unity Engine to different morphologies, behaviors, colors, and other game traits. This approach can produce a startling diversity of enemy types (Figure 2).</p>
+<p>Project Hastur also features experiment mode, in which the evolutionary parameters can be altered. This feature has numerous benefits – it allows exploration of the system on which the game is built and allows the player to autonomously test “cause and effect” as they adjust parameters.</p>
+<p>Figure 3: Experiment Mode in Project Hastur allows the user to manipulate a wide variety of game features, including the components of the evolutionary model. Importantly, users can deactivate the fitness functions, making the game “non-evolutionary”. This serves as an important control setting when testing the educational impact of our games.</p>
+<p>The “gamification” of evolution can potentially help expose players to real evolutionary models in an engaging way. However, there are several tradeoffs between fun and realism that should be addressed when developing an evolutionary video game. In this paper, we discuss the lessons learned from developing and releasing games that feature evolution as a core mechanic, and the design decisions inherent to balancing fun gameplay with scientific realism.</p>
+</section>
+<section id="basic-evolutionary-model" class="level3">
+<h3 class="anchored" data-anchor-id="basic-evolutionary-model">Basic Evolutionary Model</h3>
+<p>Variation Inheritance Selection Time</p>
+</section>
+<section id="project-hastur" class="level3">
+<h3 class="anchored" data-anchor-id="project-hastur">Project Hastur</h3>
+<p><em>Development:</em> Project Hastur is a tower defense video game developed by students in the Polymorphic Games studio at the University of Idaho. The game features a campaign of 16 original game maps, as well as an experiment mode (described below) that allows the game to serve as a simulation model. Project Hastur was released on the Steam game site on Feb 12th, 2019. The unique feature of Project Hastur is that the enemies in the game model a finite population defined by digital genomes of quantitative traits.</p>
+<p><em>Gameplay:</em> In Project Hastur, the player must defend their base against waves of enemies called the Protean Swarm. The player defends their base by placing defensive towers in strategic locations, and the towers each have different capabilities, strengths, and weaknesses. In campaign mode, the player unlocks new game maps and defensive capabilities as they proceed through the story. Each map is defined by victory conditions that involve defeating a set number of enemy generations or building their defenses to specific criteria. Enemies appear in “waves”, a classic trope of tower defense games in which the developers script the number and type of enemies that appear over the course of the level. In Project Hastur, however, the enemy waves are part of a generational evolutionary model - each new enemy wave is comprised of the offspring of the most successful parents in the previous wave. In this way, we programmed Project Hastur to become an evolutionary tower defense game in which the enemy population adapts as the game proceeds.</p>
+<p>The defensive capabilities of the player include four different categories of tower with qualitative differences in how they interact with the physics engine of the game. These include kinetic, ice, flame, and acid based towers, with each category including 4 different versions of upgrades. In addition, the player can access and upgrade two different abilities that are activated on demand with a cooldown - robotic minions and airstrikes.</p>
+</section>
+<section id="evolution-as-a-game-mechanic" class="level3">
+<h3 class="anchored" data-anchor-id="evolution-as-a-game-mechanic">Evolution as a Game Mechanic</h3>
+<p>Variation Inheritance Selection Time</p>
+</section>
+<section id="evolutionary-model" class="level3">
+<h3 class="anchored" data-anchor-id="evolutionary-model">Evolutionary Model</h3>
+<p><em>Protean Traits:</em> Each individual in the enemy population is defined by a digital genome of real numbers. There are 80 genes in the genome. Each Protean is diploid, such that its final trait value is calculated as the sum of the genetic values for the given locus on each chromosome. While all of these genes are used by the game engine to render a wide variety of visually distinct game enemies (see Figure x), some of the genes also affect Protean traits that are relevant to game play. These are the traits upon which the analyses in this paper were performed, and are defined in Table x.</p>
+<p><em>Variation:</em> When the game begins, Protean trait values are instantiated using the starting values in table x with some variation drawn from a Gaussian distribution. This creates the standing genetic variation in the population upon which selection will act. When offspring are created (described below), additional mutational variance is introduced. In campaign mode, the per locus mutation rate and effect size vary depending on the map’s degree of difficulty - more mutational variance causes the game to become much more difficult. In experiment mode, mutation rate and effect size are determined by the user. MUTATION RATE (u) is defined as the per locus probability that the genetic value of the locus will be changed by a number drawn from a Gaussian distribution with mean zero and standard deviation defined by the variable MUTATION EFFECT SIZE (e).</p>
+<p><em>Inheritance:</em> Each “wave” of Proteans in Project Hastur is actually a discrete generation of enemies created from the previous generation using a tournament selection algorithm. Proteans that are selected as parents (see Tournament Selection, below for the algorithm) each contribute one of their chromosomes, determined randomly, for each locus. Project Hastur uses a free recombination model (each locus acts as its own chromosome), but the game can specify a customized matrix of recombination frequencies among loci if the user desires. The chromosomes passed to the offspring are each passed to the mutation algorithm, and each locus has a chance (specified by u) to receive a mutation. Once the new offspring’s genome is instantiated, it is passed to the population for the next generation. Project Hastur records the unique ID numbers for each parent of every Protean. Proteans reproduce sexually, but are encoded as hermaphrodites.</p>
+<p>On game maps that contain civilians, Proteans can also reproduce using an asexual model. In this case, if a Protean kills a civilian the Protean clones itself. This cloning process produces an offspring that is genetically identical to its parent during the gameplay phase itself (rather than waiting until the end of the wave). The number of clones produced by this process depends on the parent’s size (COLLIDER SURFACE AREA). Smaller Proteans produce more clones than larger Proteans.</p>
+<p><em>Selection:</em> Project Hastur specifies two fitness functions that determine the probability that Proteans will be selected to reproduce at the end of each generation. The first Fitness Function, called BASE FITNESS is related to the player’s base. This is a number that specifies the closest distance to the player base that was achieved by a given Protean. Should the Protean get right next to the base (a distance of zero), then BASE FITNESS includes the DAMAGE the Protean does to the base. Lower BASE FITNESS values increase the probability of reproduction when the wave ends. TOWER DAMAGE is the other fitness function used to calculate whether an individual will reproduce. In this case, the game sums the total DAMAGE done by the Protean to any defensive structure. TOTAL FITNESS is calculated by subtracting TOWER DAMAGE from BASE FITNESS.</p>
+<p><em>Tournament Selection:</em> At the end of each generation, we use tournament selection to identify individuals that will serve as parents. To do this, the game randomly selects a sample of Proteans from the previous generation. The number of individuals in this sample is a controllable parameter in experiment mode called TOURNAMENT SIZE. The individual with the best (lowest) value for TOTAL FITNESS is selected as a parent. A new tournament is then conducted to select the mate. Reproduction then occurs as described above and a single offspring is passed to the population for the next generation. This process is repeated until the population in the next generation has a number of individuals in it equal to POPULATION SIZE.</p>
+<p><em>Time:</em> Over the course of each wave (defined in terms of generations), the Proteans with the trait values that best enable them to navigate the map, damage player defenses, and reach the player base will accrue the best values for fitness. Each generation then, the most fit Proteans will have the most offspring, and the multivariate trait distribution of the population will change. This process of adaptation is what we hoped to encode into a tower defense game, and this paper represents our attempt to test the hypothesis that Project Hastur is an agent based model of quantitative trait evolution.</p>
+</section>
+</section>
+<section id="tradeoffs-and-design-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="tradeoffs-and-design-decisions">Tradeoffs and Design Decisions</h2>
+<section id="variation" class="level3">
+<h3 class="anchored" data-anchor-id="variation">Variation</h3>
+<p>Standing Genetic Variation</p>
+<p>Mutational Processes</p>
+<p>Frequency and Effect Size: Example 1: Low frequency of mutation = “realistic”, High frequency = enough variation for evolution to use.</p>
+<p>Example 2: Using mutational processes to scale difficulty (Darwin’s Demons)</p>
+</section>
+<section id="inheritance" class="level3">
+<h3 class="anchored" data-anchor-id="inheritance">Inheritance</h3>
+<p>Sexual vs asexual. Hermaphrodites? Encoding the digital genome (quantitative trait model vs discrete alleles)</p>
+</section>
+<section id="selection" class="level3">
+<h3 class="anchored" data-anchor-id="selection">Selection</h3>
+<p>Fitness functions Mechanisms of selection</p>
+<p>Example: On vs off (adaptation vs drift)</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>traittemp<span class="ot">&lt;-</span>all_the_data<span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Generation, relfit, file, Evolution, Gun, Civilians, ScaleType0)<span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Generation, file, Evolution, Gun, Civilians)<span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">scaleST0 =</span> <span class="fu">scale</span>(ScaleType0, <span class="at">center =</span> <span class="cn">TRUE</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">scaleST02 =</span> scaleST0<span class="sc">*</span>scaleST0)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Gradients <span class="ot">&lt;-</span> traittemp <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Generation, file, Evolution, Gun, Civilians) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>({</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    model <span class="ot">&lt;-</span> <span class="fu">lm</span>(relfit <span class="sc">~</span> scaleST0 <span class="sc">+</span> scaleST02, <span class="at">data =</span> .)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">Beta =</span> <span class="fu">coefficients</span>(model)[<span class="dv">2</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">PB =</span> <span class="fu">summary</span>(model)<span class="sc">$</span>coef[<span class="dv">2</span>, <span class="dv">4</span>]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>Gradients <span class="ot">&lt;-</span> Gradients <span class="sc">%&gt;%</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sig =</span> <span class="fu">if_else</span>(PB <span class="sc">&lt;</span> <span class="fl">0.05</span> , <span class="st">"Y"</span>, <span class="st">"N"</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>GunFit<span class="ot">&lt;-</span> Gradients <span class="sc">%&gt;%</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Civilians <span class="sc">==</span> <span class="st">"OFF"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>CivFit<span class="ot">&lt;-</span> Gradients <span class="sc">%&gt;%</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Evolution <span class="sc">==</span> <span class="st">"OFF"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(GunFit, <span class="fu">aes</span>(<span class="at">x=</span>Generation, <span class="at">y =</span> Beta))<span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> sig))<span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightgrey"</span>,<span class="st">"red"</span>))<span class="sc">+</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Gun<span class="sc">~</span>Evolution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CivFit, <span class="fu">aes</span>(<span class="at">x=</span>Generation, <span class="at">y =</span> Beta))<span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> sig))<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightgrey"</span>,<span class="st">"red"</span>))<span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Gun<span class="sc">~</span>Civilians)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Hidden fitness functions</p>
+<p>Example: Civilians and clonal reproduction.</p>
+</section>
+<section id="heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="heatmap">Heatmap</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(AutoCiv, <span class="fu">aes</span>(<span class="at">x=</span>Generation, <span class="at">y=</span> RunSpeed))<span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Generation, <span class="at">y=</span> RunSpeed, <span class="at">color =</span> Acceleration),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="fu">muted</span>(<span class="st">"blue"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> <span class="st">"red"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">space =</span> <span class="st">"Lab"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.value =</span> <span class="st">"grey50"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">guide =</span> <span class="st">"colourbar"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">aesthetics =</span> <span class="st">"colour"</span>)<span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>replicate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Population Size: Performance Vs. Drift</p>
+<p>Example: Genetic Drift and Effective Population Size</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Twin2<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Twin/Gene_Write_File2.csv"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Twin1<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Twin/geneWriteFile.csv"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Twin2, <span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Player.Distance.Fitness))<span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Player.Distance.Fitness, <span class="at">color =</span> Player.Distance.Fitness),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="fu">muted</span>(<span class="st">"blue"</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> <span class="st">"red"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">space =</span> <span class="st">"Lab"</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.value =</span> <span class="st">"grey50"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">guide =</span> <span class="st">"colourbar"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">aesthetics =</span> <span class="st">"colour"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Twin2, <span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Tower.Attraction.Trait))<span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Tower.Attraction.Trait, <span class="at">color =</span> Main.Resistance.Trait),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="fu">muted</span>(<span class="st">"blue"</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> <span class="st">"red"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">space =</span> <span class="st">"Lab"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.value =</span> <span class="st">"grey50"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">guide =</span> <span class="st">"colourbar"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">aesthetics =</span> <span class="st">"colour"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Twin2, <span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Main.Resistance.Trait))<span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Main.Resistance.Trait, <span class="at">color =</span> Main.Type),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Main.Type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Twin2Lightning <span class="ot">&lt;-</span> Twin2 <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Main.Type <span class="sc">==</span> <span class="st">"Lightning"</span> <span class="sc">|</span> Secondary.Type <span class="sc">==</span> <span class="st">"Lightning"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Twin2Lightning, <span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Tower.Attraction.Trait))<span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Wave.Number, <span class="at">y=</span> Tower.Attraction.Trait),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size=</span><span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="GamifyingEvolution_files/figure-html/unnamed-chunk-9-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="time" class="level3">
+<h3 class="anchored" data-anchor-id="time">Time</h3>
+<p>Generational model = waves</p>
+<p>Continuous model</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
