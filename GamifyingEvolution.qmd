@@ -52,62 +52,7 @@ The defensive capabilities of the player include four different categories of to
 
 ### Evolution as a Game Mechanic
 
-## Video Games and STEM Education
-
-### Adding Evolution to Video Games
-
-The best way to explain the concept is to frame our video games in the context of the "ingredients" of evolution:
-
--   Variation
--   Inheritance
--   Selection
--   Time
-
-When these components are present, it leads to Adaptation.
-
-#### Variation
-
-Think about the enemies in the old school video games that I used to play in arcades. Space Invaders, Asteroids, Centipede, Tempest, etc. What kinds of variation can you describe in these enemies? In Space Invaders, you had three types of aliens in each wave, plus the occasional bonus flying saucer. In Centipede and Tempest, you actually had categorically different enemy types that varied in how they looked and in their capabilities. Below you can see a few examples of what I mean:
-
-
-## Space Invaders
-
-![Screenshot of the original Space Invaders](SpaceInvaders.png){.left} Enemy variation in Space Invaders includes the shape of each alien type (four types), but also their position in the armada (each type has its own row) and their speed of movement (which is adjusted based on how many remain in each wave). For now, we will ignore the flying saucer that passes across the top of the screen. The game increases in difficulty by having the movement speed of each wave increase. Ironically, the increased movement speed of the aliens within a wave as the population size was reduced was an unintended function of the increased frame rate achieved by having fewer aliens draw calls.
-
-## Centipede
-
-![Enemies in Centipede](centipede.gif){.left} Centipede includes [enemy types](https://www.retrogamedeconstructionzone.com/2020/08/the-characters-of-centipede.html){target="\"_blank"} with very different behaviors and abilities. The segmented centipede can split into component parts. Fleas drop vertically, leave a trail of mushrooms, and take two hits to destroy. Spiders move in a diagonal zig zag pattern. Scorpions move horizontally across the screen and turn mushrooms poisonous. Each wave the game difficulty increases by changing the behavior and segment number of the centipede.
-
-## Tempest
-
-![](Tempest.png){.left} While not as famous as Space Invaders or Centipede, Tempest was one of my favorite games in the early 80s. The player navigated their ship across various geometric shapes, shooting at different types of enemies with different capabilities. These included player capturing Flippers, lane electrifying Pulsars, and obstacle creating Spikers. So many quarters gone...
-
-
-This variation is a big part of what makes video games exciting. The difficulty in video games is usually increased over time by introducing new variations of enemies, changing the enemies' capabilities (like speed or fire rate) over time, or increasing the number of enemies. The problem (as we see it) is that these variations are introduced as part of a script that is programmed and balanced by the game developers. Beating the game means memorizing the script.
-
-#### Inheritance
-
-**The addition of an inheritance model is the primary differentiator in our games that creates adaptation.**
-
-In most games, there is no relationship between enemies within a wave or between waves. They are instantiated (spawned) with developer defined traits at a specified rate, location, and time (or level or wave). This is the key difference in the games that our lab creates. In our games, the enemies traits are specified by digital genomes that they pass on to their offspring through a form of reproduction. If the enemy has a speed value of 4, that means that when it reproduces, its offspring inherit that speed value of 4. Most of the games we work on specify about 40 to 80 "genes" in the enemy genome, each of which can influence one or more game traits such as speed, fire rate, morphology, behavior, health, armor, resistances, etc.
-
-#### Selection
-
-Selection occurs when there is a correlation between a trait (say... hit points or movement behavior) and **Fitness**. In biological populations, `Fitness` is usually defined in terms of the number of offspring produced by a given individual. We often measure proxies for fitness in empirical biology that are typically predictive of (or at least correlated with ) `Fitness`, such as seed set in plants, survivorship, or number of eggs. In our games, we can make explicit linkages between performance and fitness using `Fitness Functions`.
-
-For example, in Darwin's Demons the enemies accrue `Aggression` by moving downward on the screen. The closer they get to the bottom, the higher their `Aggression` score. if they move past the player and off the bottom of the screen, their `Aggression` score gets an even larger boost. After each wave, the enemies with the highest `Aggression` score also have the highest probability of mating and producing offspring. Thus, we have created an explicit link in which `Aggression` is correlated with `Fitness` (number of offspring). Our games often have more than one of these `Fitness Functions`. For example, the Protean Swarm in Darwin's Demons can also increase their mating chance with `Accuracy` (which measures how often they shoot at the player and how close they came to hitting the player) and `Lifetime` (which measures how long they last on the screen) .
-
-If we turn off the fitness functions, then after each wave the enemies undergo random mating. Adaptive evolution does not occur, but the enemy traits might still evolve randomly because of Random Genetic Drift.
-
-#### Time
-
-The concept of time in video games is often defined in terms of waves or levels. Both of these terms imply a progression toward the game's goal, along with a corresponding increase in difficulty. In our games, we usually specify time in terms of generations. A wave of enemies begin the game, the player defeats them, and then the next wave is created with Inheritance using a mating function specified as described above. As the generations (waves) proceed, the enemies with traits that are best able to optimize the fitness functions have more offspring, and the population adapts to the game play conditions. Most of these conditions are created by player choices and playstyle, and thus the enemies adapt to the player. Difficulty increases organically and repeated gameplay often creates novel adaptive solutions to the same play style.
-
-### Educational Outcomes
-
-We reasoned that playing these types of games might have implications for STEM education. The success of the player is based on her comprehension and application of principles of evolutionary biology. The parallels to real world examples are numerous, and include the rapid evolution of antibiotic resistance in microbial pathogens, adaptation of crop pests to chemical and biological control measures, and behavioral adaptation to captivity in domesticated animals.
-
-Adding biological evolution to video games makes the games better for the game player and facilitates player comprehension of complex concepts that are hard to teach.
+Variation Inheritance Selection Time
 
 ### Evolutionary Model
 
@@ -132,7 +77,7 @@ On game maps that contain civilians, Proteans can also reproduce using an asexua
 
 ### Variation
 
-When implementing evolution as a game mechanic, we encode variation of enemy traits using a digital representation of a genome.  This variation can be classified into two categories, Standing Genetic Variation and Mutational Variation.  Standing genetic variation is the genetic differences among individuals at the start of the game.  This can be adjusted as design principles dictate, but a general rule of thumb is that more variation in the initial population corresponds 
+Standing Genetic Variation
 
 Mutational Processes
 
@@ -523,32 +468,30 @@ Twin2<- read.csv("Twin/Gene_Write_File2.csv")
 Twin1<- read.csv("Twin/geneWriteFile.csv")
 Twin3<- read.csv("Twin/geneWriteFile3.csv")
 
-Twin3<-Twin3%>%
-  mutate(Unique.Slime.ID = paste(Wave.Number, ".", Slime.ID))%>%
-  mutate(Unique.Parent.One = paste(Wave.Number-1, ".", Parent.One))%>%
-  mutate(Unique.Parent.Two = paste(Wave.Number-1, ".", Parent.Two))
-
 
 df_parents <- Twin3 %>%
-  select(Unique.Parent.One, Unique.Parent.Two) %>%
-  pivot_longer(cols = everything(), names_to = "parent_type", values_to = "parent_id")
+  select(Parent.One, Parent.Two, Wave.Number) %>%
+  pivot_longer(cols = -Wave.Number, names_to = "parent_type", values_to = "parent_id")
 
 # Count the number of offspring for each parent
 offspring_counts <- df_parents %>%
-  group_by(parent_id) %>%
+  group_by(parent_id, Wave.Number) %>%
   summarise(offspring_count = n(), .groups = "drop")
 
-offspring_counts <- offspring_counts%>%
-  filter(parent_id != "-1 . N/A")
+offspring_counts <- na.omit(offspring_counts)
 
 
-offspring_counts<- rename(offspring_counts, Unique.Slime.ID = parent_id)
-
+offspring_counts<- rename(offspring_counts, Slime.ID = parent_id)
+offspring_counts <- offspring_counts %>%
+  filter(!is.na(Slime.ID)) %>%
+  mutate(Slime.ID = as.numeric(Slime.ID))
 
 
 Twin3 <- Twin3 %>%
-  left_join(offspring_counts, by = "Unique.Slime.ID")%>%
-  replace_na(list(offspring_count = 0))
+  left_join(offspring_counts, by = c("Wave.Number", "Slime.ID"))%>%
+  replace_na(list(offspring_count = 0))%>%
+  select(-X)
+
 
 Twin3counts<-Twin3%>%
   group_by(Main.Type, Wave.Number)%>%
@@ -563,69 +506,60 @@ ggplot(Twin3counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))
 
 
 ggplot(Twin3, aes(x=Wave.Number, y= Main.Resistance.Trait))+
-  geom_point(aes(x=Wave.Number, y= Main.Resistance.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Main.Resistance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Secondary.Resistance.Trait))+
-  geom_point(aes(x=Wave.Number, y= Secondary.Resistance.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Secondary.Resistance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 
 ggplot(Twin3, aes(x=Wave.Number, y= Tower.Attraction.Trait))+
-  geom_point(aes(x=Wave.Number, y= Tower.Attraction.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Tower.Attraction.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait))+
-  geom_point(aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Speed.Trait))+
-  geom_point(aes(x=Wave.Number, y= Speed.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Speed.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 
 ggplot(Twin3, aes(x=Wave.Number, y= Turn.Rate.Trait))+
-  geom_point(aes(x=Wave.Number, y= Turn.Rate.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Turn.Rate.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Slime.View.Range.Trait))+
-  geom_point(aes(x=Wave.Number, y= Slime.View.Range.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Slime.View.Range.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Tower.View.Range.Trait))+
-  geom_point(aes(x=Wave.Number, y= Tower.View.Range.Trait, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Tower.View.Range.Trait, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 ggplot(Twin3, aes(x=Wave.Number, y= Player.Distance.Fitness))+
-  geom_point(aes(x=Wave.Number, y= Player.Distance.Fitness, color = offspring_count),
-        size= 0.5,     alpha =0.2)+
+  geom_point(aes(x=Wave.Number, y= Player.Distance.Fitness, color = Main.Type, size = offspring_count/10),
+             alpha =0.2)+
   geom_smooth()+
-  facet_wrap(~Main.Type)+
-  scale_color_continuous(low="blue", high = "red")
+  facet_wrap(~Main.Type)
 
 
 Twin2Lightning <- Twin2 %>%
@@ -652,34 +586,49 @@ ggplot(Twin2counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))
 
 
 ```{r}
-traittemp.Twin<-Twin3%>%
-  select(Wave.Number, offspring_count, Slime.Optimal.Distance.Trait)%>%
-  mutate(Trait = scale(Slime.Optimal.Distance.Trait, center = TRUE))%>%
-  mutate(Trait2 = Trait*Trait)
+LastGen <- Twin3
 
-Gradients <- traittemp.Twin %>%
-  group_by(Wave.Number)%>%
-  do({
-    model <- lm(offspring_count ~ Trait + Trait2, data = .)
-    data.frame(
-      Beta = coefficients(model)[2],
-      PB = summary(model)$coef[2, 4]
-    )
-  })
-
-Gradients <- Gradients %>%
-  mutate(sig = if_else(PB < 0.05 , "Y", "N"))
+LastGen <- Twin3 %>%
+  select(Wave.Number, Slime.ID, Player.Distance.Fitness, Main.Resistance.Trait, Secondary.Resistance.Trait, Slime.View.Range.Trait, 
+         Tower.View.Range.Trait, Player.View.Range.Trait, Wall.View.Range.Trait, Sheep.View.Range.Trait, Slime.Attraction.Trait, 
+         Tower.Attraction.Trait, Player.Attraction.Trait, Wall.Attraction.Trait, Sheep.Attraction.Trait, Slime.Optimal.Distance.Trait, 
+         Speed.Trait, Turn.Rate.Trait, Sprint.Duration.Trait, Sprint.Cooldown.Trait, offspring_count) %>%
+  filter(Wave.Number == 35)
 
 
-
-ggplot(Gradients, aes(x=Wave.Number, y = Beta))+
-  geom_point(aes(color = sig))+
-  geom_smooth()+
-  scale_color_manual(values = c("lightgrey","red"))+
-  geom_hline(yintercept=0, linetype="dashed", color = "black")+
-  theme(legend.position = "none")
+paletteLength <- 50
+myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
+# length(breaks) == length(paletteLength) + 1
+# use floor and ceiling to deal with even/odd length pallettelengths
 
 
+Heatmap2 <- LastGen %>%
+  select(Player.Distance.Fitness, Main.Resistance.Trait, Secondary.Resistance.Trait, Slime.View.Range.Trait, 
+         Tower.View.Range.Trait, Player.View.Range.Trait, Wall.View.Range.Trait, Sheep.View.Range.Trait, Slime.Attraction.Trait, 
+         Tower.Attraction.Trait, Player.Attraction.Trait, Wall.Attraction.Trait, Sheep.Attraction.Trait, Slime.Optimal.Distance.Trait, 
+         Speed.Trait, Turn.Rate.Trait, Sprint.Duration.Trait, Sprint.Cooldown.Trait)
+
+Heatmap2[,1:18]<- scale(Heatmap2[,1:18])
+
+colnames(Heatmap2) <- c('Fitness', 'Main Resistance', 'Secondary Resistance', 'Slime View Range', 'Tower Viewe Range', 'Player View Range', 
+                        'Wall View Range', 'Sheep View Range', 'Slime Attraction', 'Tower Attraction', 'Player Attraction', 'Wall Attraction',
+                        'Sheep Attraction', 'Slime Optimal Distance', 'Speed', 'Turn Rate', 'Sprint Duration', 'Sprint Cooldown')
+  
+Heatmatrix2 <- as.matrix(Heatmap2)
+
+myBreaks2 <- c(seq(min(Heatmatrix2), 0, length.out=ceiling(paletteLength/2) + 1), seq(max(Heatmatrix2)/paletteLength, max(Heatmatrix2), length.out=floor(paletteLength/2)))
+
+# Generate the heatmap
+pheatmap(Heatmatrix2, 
+         cluster_rows = TRUE, # don't cluster rows
+         cluster_cols = TRUE, # don't cluster columns
+         clustering_distance_cols = "euclidean", 
+         clustering_distance_rows = "euclidean", 
+         clustering_method = "complete",
+         cellheight = 0.75,
+         fontsize_col = 10,
+         color = myColor,
+         breaks = myBreaks2)
 
 ```
 
