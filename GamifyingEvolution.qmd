@@ -179,13 +179,15 @@ singlerep <- all_the_data %>%
   filter(Gun == "Autocannon")%>%
   filter(replicate == 5)
 
-ggplot(singlerep, aes(x=Generation, y= ScaleType0))+
+Fig1<- ggplot(singlerep, aes(x=Generation, y= ScaleType0))+
   geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
              size=0.5, alpha = 0.3)+
   geom_smooth(color = "black")+
   facet_grid(~Evolution)+
-  scale_color_continuous(low="blue", high = "red")
+  scale_color_continuous(low="blue", high = "red")+
+  theme(legend.position = "bottom")
   
+ggsave("Fig1.png", Fig1, width = 4, height = 4, dpi = 300)
 
 
 ```
@@ -201,12 +203,16 @@ GenGun <- Genavg %>%
   filter(Civilians == "OFF")
 
 
-ggplot(GenGun, aes(x=Generation, y= ScaleType0))+
+Fig2<- ggplot(GenGun, aes(x=Generation, y= ScaleType0))+
   geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
              size = 0.5)+
   geom_smooth(color = "black")+
   facet_grid(Gun~Evolution)+
-  scale_color_gradient(low = muted("blue"), high = "red")
+  scale_color_gradient(low = muted("blue"), high = "red")+
+  theme(legend.position = "bottom")
+
+ggsave("Fig2.png", Fig2, width = 4, height = 4, dpi = 300)
+
 
 ```
 
@@ -242,14 +248,18 @@ GunFit<- Gradients %>%
 CivFit<- Gradients %>%
   filter(Evolution == "OFF")
 
-ggplot(GunFit, aes(x=Generation, y = Beta))+
+Fig3<-ggplot(GunFit, aes(x=Generation, y = Beta))+
   geom_point(aes(color = sig), size = 0.3, alpha = 0.6)+
-  geom_smooth()+
+  geom_smooth(fill="blue")+
   scale_color_manual(values = c("black","red"))+
   geom_hline(yintercept=0, linetype="dashed", color = "black")+
   theme(legend.position = "none",
         panel.background = element_blank())+
   facet_grid(Gun~Evolution)
+
+ggsave("Fig3.png", Fig3, width = 4, height = 4, dpi = 300)
+
+
 
 
 ```
@@ -343,7 +353,7 @@ myBreaks <- c(seq(min(Heatmatrix), 0, length.out=ceiling(paletteLength/2) + 1),
 Heatmatrix <- Heatmatrix[order(rownames(Heatmatrix)),]
 
 # Generate the heatmap
-pheatmap(Heatmatrix, 
+Fig4<- pheatmap(Heatmatrix, 
          cluster_rows = TRUE, # don't cluster rows
          cluster_cols = TRUE, # don't cluster columns
          clustering_distance_cols = "euclidean", 
@@ -351,6 +361,10 @@ pheatmap(Heatmatrix,
          clustering_method = "complete",
          color = myColor, 
          breaks = myBreaks)
+
+
+
+ggsave("Fig4.png", Fig4, width = 4, height = 4, dpi = 300)
 ```
 
 Figure 3. Heatmap of traits (columns) for 9 replicates (rows) of Project Hastur using the Autocannon conditions from Figures1 and 2. Each cell represents the Z-score of that trait, with each unit change representing one standard deviation from the overall mean of zero.
@@ -358,10 +372,11 @@ Figure 3. Heatmap of traits (columns) for 9 replicates (rows) of Project Hastur 
 This variation in evolutionary outcomes is inherent to the stochastic nature of the evolutionary model. New mutations occur randomly, and the rather small population sizes cause random genetic drift. Even within a single game replicate, we can sometimes observe subdivision of the population as evolution drives individuals toward two separate peaks in the fitness landscape.
 
 ```{r}
+#| echo: FALSE
+#| output: FALSE
 
 
-
-ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
+Fig5<- ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
   geom_point(aes(x=Generation, y= ScaleType0, color = SightRange),
              size=0.1, alpha = 0.1)+
   geom_smooth()+
@@ -373,7 +388,12 @@ ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
   na.value = "grey50",
   guide = "colourbar",
   aesthetics = "colour")+
-  facet_wrap(~replicate)
+  facet_wrap(~replicate)+
+  theme(legend.position = "bottom")
+
+ggsave("Fig5.png", Fig5, width = 4, height = 4, dpi = 300)
+
+
 ```
 
 For example, when we plot the individual values of the ScaleType0 gene and color by the Sight Range trait, we observe that replicates 2 and 3 are clearly evolving towards smaller individuals. Further, the individual patterns of evolution among the replicates differ in their temporal dynamics. The most extreme example is replicate 8, in which two sub-populations are clearly present between generation 25 and 40, after which point the larger individuals out-compete the smaller and the mean size of the enemies changes dramatically.
@@ -388,54 +408,6 @@ The concept of time in video games is often defined in terms of waves or levels.
 
 To make an interesting and challenging game, evolution must occur within the rather limited time frame of gameplay. In nature, biological evolution can take thousands to tens of thousands of generations to result in obvious changes. This is much too long for most games, necessitating sacrifices in realism of the model. Potential changes to model parameters include increasing the amount of genetic variance and selection pressure, both of which can speed up the evolutionary process. But there has to be a careful balance. Too much variance and advantageous traits can be lost to mutation. Too much selection and the population will converge on a single genotype, making the game less interesting because all opponents are identical and limiting variation for future evolution.
 
-```{r}
-#| echo: FALSE
-
-GenGun <- Genavg %>%
-  filter(Civilians == "OFF")
-
-GenCiv <- Genavg %>%
-  filter(Evolution == "OFF")
-
-ggplot(GenGun, aes(x=Generation, y= ColliderSurfaceArea))+
-  geom_point(aes(x=Generation, y= ColliderSurfaceArea, color = Health))+
-  geom_smooth()+
-  facet_grid(Gun~Evolution)
-
-ggplot(GenGun, aes(x=Generation, y= ScaleType0))+
-  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea))+
-  geom_smooth()+
-  facet_grid(Gun~Evolution)+
-  scale_color_gradient(low = muted("blue"),
-
-  high = "red",
-
-  space = "Lab",
-  na.value = "grey50",
-  guide = "colourbar",
-  aesthetics = "colour")
-
-
-ggplot(GenCiv, aes(x=Generation, y= ColliderSurfaceArea))+
-  geom_point(aes(x=Generation, y= ColliderSurfaceArea, color = Health))+
-  geom_smooth()+
-  facet_grid(Gun~Civilians)
-
-ggplot(GenCiv, aes(x=Generation, y= ScaleType0))+
-  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea))+
-  geom_smooth()+
-  facet_grid(Gun~Civilians)+
-  scale_color_gradient(low = muted("blue"),
-
-  high = "red",
-
-  space = "Lab",
-  na.value = "grey50",
-  guide = "colourbar",
-  aesthetics = "colour")
-
-  
-```
 
 ```{r}
 traittemp<-all_the_data%>%
@@ -463,13 +435,6 @@ GunFit<- Gradients %>%
 CivFit<- Gradients %>%
   filter(Evolution == "OFF")
 
-ggplot(GunFit, aes(x=Generation, y = Beta))+
-  geom_point(aes(color = sig))+
-  geom_smooth()+
-  scale_color_manual(values = c("lightgrey","red"))+
-  geom_hline(yintercept=0, linetype="dashed", color = "black")+
-  theme(legend.position = "none")+
-  facet_grid(Gun~Evolution)
 
 ggplot(CivFit, aes(x=Generation, y = Beta))+
   geom_point(aes(color = sig))+
@@ -555,57 +520,6 @@ ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
 
 ```
 
-### Heatmap
-
-```{r}
-#| echo: FALSE
-
-
-paletteLength <- 50
-myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
-# length(breaks) == length(paletteLength) + 1
-# use floor and ceiling to deal with even/odd length pallettelengths
-
-Heatmap<- AC49 %>%
-  select(Health, ColliderSurfaceArea, 
-         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
-         TurnRate, Attraction0, Attraction1, Attraction2, replicate)%>%
-  group_by(replicate)%>%
-  summarize_all(mean, na.rm = TRUE)
-
-
-
-Heatscale<-Heatmap%>%
-  transmute(across(c(Health, ColliderSurfaceArea, 
-         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
-         TurnRate, Attraction0, Attraction1, Attraction2),
-         scale))
-  
-Heatmatrix <- as.matrix(Heatscale)
-
-rownames(Heatmatrix)<-Heatmap$replicate
-
-myBreaks <- c(seq(min(Heatmatrix), 0, length.out=ceiling(paletteLength/2) + 1), 
-              seq(max(Heatmatrix)/paletteLength, max(Heatmatrix), length.out=floor(paletteLength/2)))
-
-
-
-# Sort your data by row names
-Heatmatrix <- Heatmatrix[order(rownames(Heatmatrix)),]
-
-# Generate the heatmap
-pheatmap(Heatmatrix, 
-         cluster_rows = TRUE, # don't cluster rows
-         cluster_cols = TRUE, # don't cluster columns
-         clustering_distance_cols = "euclidean", 
-         clustering_distance_rows = "euclidean", 
-         clustering_method = "complete",
-         color = myColor, 
-         breaks = myBreaks)
-
-
-
-```
 
 ```{r}
 ggplot(AutoCiv, aes(x=Generation, y= RunSpeed))+
@@ -624,58 +538,6 @@ ggplot(AutoCiv, aes(x=Generation, y= RunSpeed))+
 
 ```
 
-```{r}
-#| echo: FALSE
-
-
-paletteLength <- 50
-myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
-# length(breaks) == length(paletteLength) + 1
-# use floor and ceiling to deal with even/odd length pallettelengths
-
-Heatmap<- AC49 %>%
-  select(Health, ColliderSurfaceArea, 
-         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
-         TurnRate, Attraction0, Attraction1, Attraction2, replicate)%>%
-  filter(replicate==7)
-
-
-
-Heatscale<-Heatmap%>%
-  transmute(across(c(Health, ColliderSurfaceArea, 
-         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
-         TurnRate, Attraction0, Attraction1, Attraction2),
-         scale))
-  
-Heatmatrix <- as.matrix(Heatscale)
-
-rownames(Heatmatrix)<-Heatmap$replicate
-
-myBreaks <- c(seq(min(Heatmatrix), 0, length.out=ceiling(paletteLength/2) + 1), 
-              seq(max(Heatmatrix)/paletteLength, max(Heatmatrix), length.out=floor(paletteLength/2)))
-
-
-
-# Sort your data by row names
-Heatmatrix <- Heatmatrix[order(rownames(Heatmatrix)),]
-
-# Generate the heatmap
-pheatmap(Heatmatrix, 
-         cluster_rows = TRUE, # don't cluster rows
-         cluster_cols = TRUE, # don't cluster columns
-         clustering_distance_cols = "euclidean", 
-         clustering_distance_rows = "euclidean", 
-         clustering_method = "complete",
-         color = myColor, 
-         breaks = myBreaks)
-
-
-
-```
-
-Population Size: Performance Vs. Drift
-
-Example: Genetic Drift and Effective Population Size
 
 ```{r}
 Twin2<- read.csv("Twin/Gene_Write_File2.csv")
@@ -861,42 +723,6 @@ pheatmap(Heatmatrix2,
 
 ```
 
-```{r}
-traittemp.Twin<-Twin3%>%
-  select(Wave.Number, offspring_count, Slime.Optimal.Distance.Trait)%>%
-  group_by(Wave.Number)%>%
-  mutate(Trait = scale(Slime.Optimal.Distance.Trait, center = TRUE))%>%
-  mutate(Trait2 = Trait*Trait)
-
-Gradients <- traittemp.Twin %>%
-  group_by(Wave.Number)%>%
-  do({
-    model <- lm(offspring_count ~ Trait + Trait2, data = .)
-    data.frame(
-      Beta = coefficients(model)[2],
-      PB = summary(model)$coef[2, 4]
-    )
-  })
-
-Gradients <- Gradients %>%
-  mutate(sig = if_else(PB < 0.05 , "Y", "N"))
-
-
-
-ggplot(Gradients, aes(x=Wave.Number, y = Beta))+
-  geom_point(aes(color = sig))+
-  geom_smooth()+
-  scale_color_manual(values = c("lightgrey","red"))+
-  geom_hline(yintercept=0, linetype="dashed", color = "black")+
-  theme(legend.position = "none")
-
-# ggplot(Twin3, aes(x = Player.Distance.Fitness)) +
-#   geom_histogram(binwidth = 1000, fill = 'blue', color = 'black') +
-#   labs(x = "Variable Name", y = "Frequency") +
-#   theme_minimal()+
-#   facet_wrap(~Wave.Number)
-
-```
 
 ### Educational Outcomes
 
