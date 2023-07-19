@@ -1,72 +1,30 @@
 ---
 title: "Gamifying Evolution"
-
-format: html
+author: "Barrie D. Robison"
+abstract: "stuff si junk"
+format:
+  docx:
+    reference-doc: custom-reference-doc.docx
+bibliography: references.bib
 ---
 
-## Abstract
+# Introduction
 
-## Introduction
+Biological evolution is a critically important process that frames much of our understanding of the natural world. Unfortunately, public misconceptions about evolution are extremely common. In fact, the mere acceptance of evolution as a real process is uncommon in many demographic groups, and is particularly low in the United States @miller2021 , and educators often face direct opposition to teaching evolution in their classrooms. The many opponents of evolution also intentionally spread demonstrably false information and have powerful lobbying capabilities. Evolution is a concept that can be difficult to present in a formal learning setting but is very understandable when directly observed. Engaging games and simulations could therefore be particularly beneficial in helping to reach students and in correcting pervasive public misconceptions about the discipline.
 
-Evolution is an incredibly powerful process, it has led to all life on Earth, creating a vast diversity of species that are endlessly competing, or in some cases cooperating, to survive and reproduce. Successfully incorporating evolutionary processes into games creates two fantastic opportunities. First, it can make games better. Almost every game presents the player with increasingly difficult and interesting challenges. Typically, these challenges are pre-programmed, which means that the progression of the game is fairly fixed, replayabilty is limited, and if the player finds a 'cheat' they can use it repeatedly. In contrast, if the challenges evolve, in the true sense of the word, to outperform the player, then the game gets more difficult in direct response to the player's decisions. No matter what choices the player makes the game will evolve a counter.
+The "gamification" of biological evolution also has potential implications for game designers. Encoding evolution as a game mechanic creates a system that adapts to player strategy, produces unexpected results and emergent properties, and inherently scales difficulty in response to player skill. These features have the potential to increase replayability and decrease development effort on game balancing.
 
-Second, evolutionary games can be used to teach evolution, a subject that is difficult to present in the abstract and faced by literally millions of deniers who have taken it upon themselves to undermine the subject by any means necessary. Gamers are deeply motivated to win, which almost always means understanding the internal mechanisms of the game they are playing. If that mechanic is evolution then they will learn evolution, not because its on the syllabus, or to get a good grade, but to beat the game - a far stronger motivation for many.
+Game designers have long recognized the potential of evolution to SELL games. Unfortunately, the most successful commercial games that emphasize evolution (for example, Spore™, Evolve™, and Pokemon™ Evolution) aren't evolutionary at all. Most of these games insert player choice into the "evolutionary" process, allowing for example, the player's character to choose whether to "evolve" a beak, or a lightning attack. This approach inadvertently represents intelligent design, a pseudoscientific reskinning of young earth creationism. These games, which use evolution as a marketing angle, potentially exacerbate the public's confusion about evolution and reinforce existing misconceptions.
 
-### Evolution and Public Acceptance of Science
+There have been a few games that avoid this trend and present reasonably accurate models of evolution. *Intelligent Design: An Evolutionary Sandbox* (available on Steam) is an evolutionary game in which players create species that are placed in an evolving ecosystem - once released, the creatures continue to evolve on their own. *Niche* (available on Steam) is a turn-based game in which the player breeds members of a species to avoid extinction. Although they have not been released commercially, the game *NeuroEvolving Robotic Operatives* (NERO) and a spin-off, *EvoCommander*, are also examples of games that incorporate evolution.
 
-Of all the topics that represent public misconceptions about science, evolution is perhaps the most vexing to solve (though climate change is emerging as a new front runner in this dubious race). Acceptance of evolution is particularly low in the United States \[19\], and educators often face direct opposition to teaching evolution in their classrooms. The many opponents of evolution also intentionally spread demonstrably false information and have powerful lobbying capabilities.
+## Polymorphic Games
 
-Evolution is a concept that can be difficult to present in a formal learning setting but is very understandable when directly observed. Engaging games and simulations could therefore be particularly beneficial in helping to reach students and in correcting pervasive public misconceptions about the discipline. Unfortunately, many games have taken the opposite approach, using the term evolution to attract players while containing no, or misleading, evolutionary content.
-
-Previous "evolutionary" games
-
-Game designers have long recognized the potential of evolution to SELL games \[20\]. Frustratingly, the most successful commercial games that emphasize evolution (for example, Spore™, Evolve™, and Pokemon™ Evolution) aren't evolutionary at all. Most of these games insert player choice into the "evolutionary" process, allowing for example, the player's character to choose whether to "evolve" a beak, or a lightning attack. This approach inadvertently represents intelligent design, a pseudoscientific reskinning of young earth creationism. These games, which use evolution as a marketing angle, potentially exacerbate the public's confusion about evolution and reinforce existing misconceptions.
-
-There have been a few games that avoid this trend and present reasonably accurate models of evolution. *Intelligent Design: An Evolutionary Sandbox* (available on Steam) is an evolutionary game in which players create species that are placed in an evolving ecosystem - once released, the creatures continue to evolve on their own. *Niche* (available on Steam) is a turn-based game in which the player breeds members of a species to avoid extinction. Although they have not been released commercially, the game *NeuroEvolving Robotic Operatives* (NERO) and a spin-off, *EvoCommander*, are also examples of games that incorporate evolution \[23, 24, 25\]. In *Galactic Arms Race* evolution is used to procedurally generate new weapons for the player \[20\], and evolutionary computation researchers have successfully tied the evolution of evolved fire patterns in *Galactic Arms Race* to the background music \[26, 27\].
-
-### Polymorphic Games
-
-Polymorphic Games is an interdisciplinary game studio on the UI campus and one of our focuses is the gamification of evolution. Polymorphic Games employs a unique development approach, in which undergraduates from a wide range of disciplines (including Computer Science, Virtual Technology and Design, Biology, English, Theater, Education, Business, and Music) collaborate to create video games that incorporate evolution as a core game mechanic. We were motivated to create Polymorphic Games by the idea that evolution makes a game better -- more compelling and more fun -- because the game adapts to the player. We argue that this approach represents a positive combination of STEM engagement and informal learning. Given a compelling game, players are inherently motivated to learn the underlying evolutionary concepts in order to succeed at the game objectives. Thus, the goal of Polymorphic Games is to make fun and compelling games, and to use established tools (e.g. in-game achievements, Easter eggs, challenges, and missions) to increase the games' educational impact.
+Polymorphic Games is an interdisciplinary game studio at the University of Idaho that focuses on the gamification of evolution. Polymorphic Games employs undergraduates from a wide range of disciplines (including Computer Science, Virtual Technology and Design, Biology, English, Theater, Education, Business, and Music) to create video games that incorporate evolution as a core game mechanic. The studio is motivated by the idea that evolution can make games more compelling and more fun because the game adapts to the player. We argue that this approach represents a positive combination of STEM engagement and informal learning. We seek to make a compelling game ini which players are inherently motivated to learn the underlying evolutionary concepts in order to succeed at the game objectives.
 
 Polymorphic Games' first project was Darwin's Demons, a "space shooter" game inspired by Space Invaders. In Darwin's Demons, the player battles an evolving population of aliens (Figure 1). The enemies' traits are encoded by a digital genome of real numbers, and the fittest enemies reproduce to create the next generation causing the population to adapt to the player. The name of the game was inspired by the Darwinian Demon metaphor, which describes an organism that can evolve without constraint. In Darwin's Demons, each trait can evolve independently (there are no evolutionary tradeoffs), meaning that eventually the player will lose. The objective (like in Space Invaders) is to beat the high score. Players can choose from a wide range of ships and secondary equipment, which increases player interest and serves to drive evolution along different trajectories \[28\]. Players can upgrade their equipment between generations of enemies, which are the evolutionary equivalent of waves in a typical video game. The up-grade screen includes data on the evolutionary trajectory of the game (Figure 2). The game saves the genome of every creature as a .csv file, allowing experimentation and in-depth analysis of the creatures' evolution in response to player strategy. Development on Darwin's Demons began in May 2016, and the game was released for sale on Valve's Steam platform on February 13, 2017 (the Monday after Darwin Day). To our knowledge, Darwin's Demons was the first commercially released game to fully feature evolving enemies.
 
-Figure 1: Left: A screenshot from Polymorphic Game's first commercial video game Darwin's Demons, in which the player battles an evolving population of enemies. Right: The upgrade screen in Darwin's Demons, which graphs the evolution of game traits.
-
-Polymorphic Games' second commercial release was Project Hastur, an evolutionary tower defense game. Project Hastur features fully realized 3D game environments and is the first implementation of our evolutionary procedural generation approach. All the game enemies are encoded by a digital genome, and mutations of this genome can produce a startling array of phenotypes. In Project Hastur, the player can play through a campaign that features 14 unique maps that unlock a series of defensive capabilities. The game features its own story, a wide variety of upgrade choices, and many fun "Easter Eggs" about evolution. In this game, our student developers created a method for evolutionary procedural generation of game enemies. All of the creatures in the game have the same architecture of their digital genomes (62 genes encoded by real numbers). These genomes are converted in the Unity Engine to different morphologies, behaviors, colors, and other game traits. This approach can produce a startling diversity of enemy types (Figure 2).
-
-Project Hastur also features experiment mode, in which the evolutionary parameters can be altered. This feature has numerous benefits -- it allows exploration of the system on which the game is built and allows the player to autonomously test "cause and effect" as they adjust parameters.
-
-Figure 3: Experiment Mode in Project Hastur allows the user to manipulate a wide variety of game features, including the components of the evolutionary model. Importantly, users can deactivate the fitness functions, making the game "non-evolutionary". This serves as an important control setting when testing the educational impact of our games.
-
-
-The "gamification" of evolution can potentially help expose players to real evolutionary models in an engaging way. However, there are several tradeoffs between fun and realism that should be addressed when developing an evolutionary video game. In this paper, we discuss the lessons learned from developing and releasing games that feature evolution as a core mechanic, and the design decisions inherent to balancing fun gameplay with scientific realism.
-
-*Development:*  Project Hastur is a tower defense video game developed by students in the Polymorphic Games studio at the  University of Idaho.   The game features a campaign of 16 original game maps, as well as an experiment mode (described below) that allows the game to serve as a simulation model.  Project Hastur was released on the Steam game site on Feb 12th, 2019.  The unique feature of Project Hastur is that the enemies in the game model a finite population defined by digital genomes of quantitative traits.
-
-*Gameplay:*  In Project Hastur, the player must defend their base against waves of enemies called the Protean Swarm.  The player defends their base by placing defensive towers in strategic locations, and the towers each have different capabilities, strengths, and weaknesses.  In campaign mode, the player unlocks new game maps and defensive capabilities as they proceed through the story.  Each map is defined by victory conditions that involve defeating a set number of enemy generations or building their defenses to specific criteria.  Enemies appear in “waves”, a classic trope of tower defense games in which the developers script the number and type of enemies that appear over the course of the level.  In Project Hastur, however, the enemy waves are part of a generational evolutionary model - each new enemy wave is comprised of the offspring of the most successful parents in the previous wave.  In this way, we programmed Project Hastur to become an evolutionary tower defense game in which the enemy population adapts as the game proceeds.
-
-The defensive capabilities of the player include four different categories of tower with qualitative differences in how they interact with the physics engine of the game.  These include kinetic, ice, flame, and acid based towers, with each category including 4 different versions of upgrades.  In addition, the player can access and upgrade two different abilities that are activated on demand with a cooldown - robotic minions and airstrikes.
-
-The "gamification" of evolution can potentially help expose players to real evolutionary models in an engaging way.  However, there are several tradeoffs between fun and realism that should be addressed when developing an evolutionary video game.  In this paper, we discuss the lessons learned from developing and releasing games that feature evolution as a core mechanic, and the design decisions inherent to balancing fun gameplay with scientific realism.
-
-
-
-
-The basic evolutionary model used in the game studio projects consists of four key elements: selection, inheritance, variation, and time. In each game there is a population of enemies that 'attack' the player. At the end of each wave/generation each enemy is assigned a fitness value based on how well it performed. Typically, this includes a measure of how much damage it did to the player or their resources or lives. However, in many cases the enemies are defeated before they inflict and damage, so fitness also measures how close they came to doing damage, either by shooting close to the player or by getting close to the player. This is necessary to make sure that there is a broad fitness gradient - i.e. that the majority of the enemies do not get assigned the same fitness.
-
-Once the enemies have been assigned a fitness based on their performance against the player the enemies with the highest fitness are *selected* to reproduce. There are a number of difference selection techniques, but all of them combine favoring the most fit individuals to drive evolution with some level of stochasticity to maintain a diverse population. Over selection of a few best individuals can lead to a population with too little diversity to effectively evolve.
-
-The individuals selected to reproduce pass their digital genes into the next generation in a form of *inheritance*. Commonly two selected individuals will mix their digital genes in a form of simulated sexual reproduction. This increases the *variation* in the population by creating new hybrids.
-
-Additionally the newly generated genomes undergo a mutation step in which some of their values have random noise added. This further increase the *variation* in the population of enemies. Mutation is typically applied at rates so that 1-3 gene values vary per individual per generation. This is several orders of magnitude higher that natural, biological evolution, which is necessary to increase the rate of evolution to the point where it is observable to the character and results in change that is meaningful on the timescale of a game that only lasts tens of generations. This higher mutation rate works because there are no lethal mutations in our models, all of the mutations effect traits like speed, strength, resistance, etc. whereas in biological evolution significant mutations are often lethal in the form of failed biological processes.
-
-Finally, this process gets repeated every wave - every evolutionary generation - in the game. This repetition of the evolutionary process over *time* is what allows the enemies to evolve to become tougher opponents.
-
-These basic components: selection, inheritance, variation, and time can be implemented in many games to add an evolutionary component. The critical aspect of evolution over other techniques to scale difficulty is that evolution is drive purely by the enemies performance against the player. If the player implements a novel strategy, whatever enemies perform well against that strategy will reproduce. The game automatically builds in difficulty in response to the player's choices.
-
-Variation Inheritance Selection Time \[done above?\]
-
-### Project Hastur
+Polymorphic Games' second commercial release was Project Hastur, an evolutionary tower defense game. Project Hastur features a 3D game environment and enemies are procedurally generated from a digital genome, producing a wide variety of morphologies, behaviors, capabilities, and other game traits. In Project Hastur, the player can play through a campaign that features 14 unique maps that unlock a series of defensive capabilities. Project Hastur also features experiment mode, in which the evolutionary parameters can be altered. This feature has numerous benefits -- it allows exploration of the system on which the game is built and allows the player to autonomously test "cause and effect" as they adjust parameters.
 
 *Development:* Project Hastur is a tower defense video game developed by students in the Polymorphic Games studio at the University of Idaho. The game features a campaign of 16 original game maps, as well as an experiment mode (described below) that allows the game to serve as a simulation model. Project Hastur was released on the Steam game site on Feb 12th, 2019. The unique feature of Project Hastur is that the enemies in the game model a finite population defined by digital genomes of quantitative traits.
 
@@ -74,91 +32,25 @@ Variation Inheritance Selection Time \[done above?\]
 
 The defensive capabilities of the player include four different categories of tower with qualitative differences in how they interact with the physics engine of the game. These include kinetic, ice, flame, and acid based towers, with each category including 4 different versions of upgrades. In addition, the player can access and upgrade two different abilities that are activated on demand with a cooldown - robotic minions and airstrikes.
 
-### Evolution as a Game Mechanic
+The "gamification" of evolution can potentially help expose players to real evolutionary models in an engaging way. However, there are several tradeoffs between fun and realism that should be addressed when developing an evolutionary video game. In this paper, we discuss the lessons learned from developing and releasing games that feature evolution as a core mechanic, and the design decisions inherent to balancing fun gameplay with scientific realism. We will primarily use gameplay data from Project Hastur to demonstrate how the balance between realism and fun has in-game consequences.
 
-The best way to explain the concept is to frame our video games in the context of the "ingredients" of evolution:
+# Evolution as a Game Mechanic
 
--   Variation
--   Inheritance
--   Selection
--   Time
+Here, we explain our approach to the gamification of evolution using four commonly taught components of the evolutionary process: Variation, Inheritance, Selection, and Time. When these components are present, the evolutionary process leads to Adaptation.
 
-When these components are present, it leads to Adaptation.
+## Variation
 
-#### Variation
+Pretty much every video game features some kind of variation. Even the first arcade games, such as Space Invaders, Asteroids, Centipede, and Tempest, relied on variation among enemies or obstacles to add interest and challenge. In Space Invaders, for example, there three types of aliens in each wave, along with the occasional bonus flying saucer. Centipede and Tempest featured categorically different enemy types that varied in how they looked and in their capabilities. Variation is a central component of game development and is a big part of what makes video games exciting. The difficulty in video games is often increased over time by introducing new variations of enemies, changing the enemies' capabilities (like speed or fire rate) over time, or increasing the number of enemies. One potential challenge, though, is that these variations are introduced as part of a script that is programmed and balanced by the game developers. Beating a game often means memorizing the script.
 
-Think about the enemies in the old school video games that I used to play in arcades. Space Invaders, Asteroids, Centipede, Tempest, etc. What kinds of variation can you describe in these enemies? In Space Invaders, you had three types of aliens in each wave, plus the occasional bonus flying saucer. In Centipede and Tempest, you actually had categorically different enemy types that varied in how they looked and in their capabilities. Below you can see a few examples of what I mean:
+**A central theme here is that game difficulty is often controlled through variation of enemies.**
 
+When implementing evolution as a game mechanic, we encode variation of enemy traits using a digital representation of a genome. This variation can be classified into two categories, Standing Genetic Variation and Mutational Variation. Standing genetic variation is the genetic differences among individuals at the start of the game. This can be adjusted as design principles dictate, but a general rule of thumb is that more variation in the initial population corresponds to a faster rate of adaptation in the early phases of the game. Were the game to proceed solely using the standing genetic variation present at the beginning, the combination of selection and random genetic drift would result in a genetically and phenotypically homogeneous population in rather short order. The resultant lack of variation in the population would quickly engender boredom in the player.
 
+Mutational processes can be used each generation to introduce new genetic variation upon which selection can act. This is akin to adding more "fuel" to the process of adaptation, sustaining the evolutionary game play much longer than one would observe with only standing genetic variation. We typically use a mutational step between generations, mutating the digital gametes passed on by the parents to their descendents in the next generation. It is here that we must acknowledge a tension between designing a game for fun and creating an accurate evolutionary simulation. Mutation rates in biological populations are well studied, and rates range between 1 in 10\^6 and 1 in 10\^9 per locus. These rates are much too low to make for very compelling game play. In our games, we typically use mutation rates that are much higher than those found in nature. This accelerates the infusion of mutational variance into the population.
 
-## Space Invaders
-
-![Screenshot of the original Space Invaders](SpaceInvaders.png){.left} Enemy variation in Space Invaders includes the shape of each alien type (four types), but also their position in the armada (each type has its own row) and their speed of movement (which is adjusted based on how many remain in each wave). For now, we will ignore the flying saucer that passes across the top of the screen. The game increases in difficulty by having the movement speed of each wave increase. Ironically, the increased movement speed of the aliens within a wave as the population size was reduced was an unintended function of the increased frame rate achieved by having fewer aliens draw calls.
-
-
-*Protean Traits:* Each individual in the enemy population is defined by a digital genome of real numbers. There are 80 genes in the genome. Each Protean is diploid, such that its final trait value is calculated as the sum of the genetic values for the given locus on each chromosome. While all of these genes are used by the game engine to render a wide variety of visually distinct game enemies (see Figure x), some of the genes also affect Protean traits that are relevant to game play. These are the traits upon which the analyses in this paper were performed, and are defined in Table x.
-
-*Variation:* When the game begins, Protean trait values are instantiated using the starting values in table x with some variation drawn from a Gaussian distribution. This creates the standing genetic variation in the population upon which selection will act. When offspring are created (described below), additional mutational variance is introduced. In campaign mode, the per locus mutation rate and effect size vary depending on the map's degree of difficulty - more mutational variance causes the game to become much more difficult. In experiment mode, mutation rate and effect size are determined by the user. MUTATION RATE (u) is defined as the per locus probability that the genetic value of the locus will be changed by a number drawn from a Gaussian distribution with mean zero and standard deviation defined by the variable MUTATION EFFECT SIZE (e).
-
-## Centipede
-
-![Enemies in Centipede](centipede.gif){.left} Centipede includes [enemy types](https://www.retrogamedeconstructionzone.com/2020/08/the-characters-of-centipede.html){target="\"_blank"} with very different behaviors and abilities. The segmented centipede can split into component parts. Fleas drop vertically, leave a trail of mushrooms, and take two hits to destroy. Spiders move in a diagonal zig zag pattern. Scorpions move horizontally across the screen and turn mushrooms poisonous. Each wave the game difficulty increases by changing the behavior and segment number of the centipede.
-
-## Tempest
-
-![](Tempest.png){.left} While not as famous as Space Invaders or Centipede, Tempest was one of my favorite games in the early 80s. The player navigated their ship across various geometric shapes, shooting at different types of enemies with different capabilities. These included player capturing Flippers, lane electrifying Pulsars, and obstacle creating Spikers. So many quarters gone...
-
-
-This variation is a big part of what makes video games exciting. The difficulty in video games is usually increased over time by introducing new variations of enemies, changing the enemies' capabilities (like speed or fire rate) over time, or increasing the number of enemies. The problem (as we see it) is that these variations are introduced as part of a script that is programmed and balanced by the game developers. Beating the game means memorizing the script.
-
-
-*Inheritance:* Each "wave" of Proteans in Project Hastur is actually a discrete generation of enemies created from the previous generation using a tournament selection algorithm. Proteans that are selected as parents (see Tournament Selection, below for the algorithm) each contribute one of their chromosomes, determined randomly, for each locus. Project Hastur uses a free recombination model (each locus acts as its own chromosome), but the game can specify a customized matrix of recombination frequencies among loci if the user desires. The chromosomes passed to the offspring are each passed to the mutation algorithm, and each locus has a chance (specified by u) to receive a mutation. Once the new offspring's genome is instantiated, it is passed to the population for the next generation. Project Hastur records the unique ID numbers for each parent of every Protean. Proteans reproduce sexually, but are encoded as hermaphrodites.
-
-
-On game maps that contain civilians, Proteans can also reproduce using an asexual model. In this case, if a Protean kills a civilian the Protean clones itself. This cloning process produces an offspring that is genetically identical to its parent during the gameplay phase itself (rather than waiting until the end of the wave). The number of clones produced by this process depends on the parent's size (COLLIDER SURFACE AREA). Smaller Proteans produce more clones than larger Proteans.
-
-When implementing evolution as a game mechanic, we encode variation of enemy traits using a digital representation of a genome.  This variation can be classified into two categories, Standing Genetic Variation and Mutational Variation.  Standing genetic variation is the genetic differences among individuals at the start of the game.  This can be adjusted as design principles dictate, but a general rule of thumb is that more variation in the initial population corresponds to a faster rate of adaptation in the early phases of the game.  Were the game to proceed solely using the standing genetic variation present at the beginning, the combination of selection and random genetic drift would result in a genetically and phenotypically homogeneous population in rather short order.  The resultant lack of variation in the population would quickly engender boredom in the player.
-
-Mutational processes can be used each generation to introduce new genetic variation upon which selection can act.  This is akin to adding more "fuel" to the process of adaptation, sustaining the evolutionary game play much longer than one would observe with only standing genetic variation.  We typically use a mutational step between generations, mutating the digital gametes passed on by the parents to their descendents in the next generation.  It is here that we must acknowledge a tension between designing a game for fun and creating an accurate evolutionary simulation.  Mutation rates in biological populations are well studied, and rates range between 1 in 10^6 and 1 in 10^9 per locus.  These rates are much too low to make for very compelling game play.  In our games, we typically use mutation rates that are much higher than those found in nature.  This accelerates the infusion of mutational variance into the population.
-
-It is important to note that the amount of genetic variation in the population tends to scale with game difficulty.  In our previous games, we have used the rate and effect size of new mutations as one of the key differentiators between modes of difficulty.
-
+It is important to note that the amount of genetic variation in the population tends to scale with game difficulty. In our previous games, we have used the rate and effect size of new mutations as one of the key differentiators between modes of difficulty.
 
 Example 2: Using mutational processes to scale difficulty (Darwin's Demons)
-
-#### Inheritance
-
-**The addition of an inheritance model is the primary differentiator in our games that creates adaptation.**
-
-In most games, there is no relationship between enemies within a wave or between waves. They are instantiated (spawned) with developer defined traits at a specified rate, location, and time (or level or wave). This is the key difference in the games that our lab creates. In our games, the enemies traits are specified by digital genomes that they pass on to their offspring through a form of reproduction. If the enemy has a speed value of 4, that means that when it reproduces, its offspring inherit that speed value of 4. Most of the games we work on specify about 40 to 80 "genes" in the enemy genome, each of which can influence one or more game traits such as speed, fire rate, morphology, behavior, health, armor, resistances, etc.
-
-*Protean Traits:*  Each individual in the enemy population is defined by a digital genome of real numbers.  There are 80 genes in the genome.  Each Protean is diploid, such that its final trait value is calculated as the sum of the genetic values for the given locus on each chromosome.  While all of these genes are used by the game engine to render a wide variety of visually distinct game enemies (see Figure x), some of the genes also affect Protean traits that are relevant to game play.  These are the traits upon which the analyses in this paper were performed, and are defined in Table x.
-
-
-*Inheritance:*  Each “wave” of Proteans in Project Hastur is actually a discrete generation of enemies created from the previous generation using a tournament selection algorithm.  Proteans that are selected as parents (see Tournament Selection, below for the algorithm) each contribute one of their chromosomes, determined randomly, for each locus.  Project Hastur uses a free recombination model (each locus acts as its own chromosome), but the game can specify a customized matrix of recombination frequencies among loci if the user desires.  The chromosomes passed to the offspring are each passed to the mutation algorithm, and each locus has a chance (specified by u) to receive a mutation.  Once the new offspring’s genome is instantiated, it is passed to the population for the next generation.  Project Hastur records the unique ID numbers for each parent of every Protean. Proteans reproduce sexually, but are encoded as hermaphrodites.  
-
-
-*Selection:* Project Hastur specifies two fitness functions that determine the probability that Proteans will be selected to reproduce at the end of each generation. The first Fitness Function, called BASE FITNESS is related to the player's base. This is a number that specifies the closest distance to the player base that was achieved by a given Protean. Should the Protean get right next to the base (a distance of zero), then BASE FITNESS includes the DAMAGE the Protean does to the base. Lower BASE FITNESS values increase the probability of reproduction when the wave ends. TOWER DAMAGE is the other fitness function used to calculate whether an individual will reproduce. In this case, the game sums the total DAMAGE done by the Protean to any defensive structure. TOTAL FITNESS is calculated by subtracting TOWER DAMAGE from BASE FITNESS.
-
-
-*Tournament Selection:* At the end of each generation, we use tournament selection to identify individuals that will serve as parents. To do this, the game randomly selects a sample of Proteans from the previous generation. The number of individuals in this sample is a controllable parameter in experiment mode called TOURNAMENT SIZE. The individual with the best (lowest) value for TOTAL FITNESS is selected as a parent. A new tournament is then conducted to select the mate. Reproduction then occurs as described above and a single offspring is passed to the population for the next generation. This process is repeated until the population in the next generation has a number of individuals in it equal to POPULATION SIZE.
-
-*Time:* Over the course of each wave (defined in terms of generations), the Proteans with the trait values that best enable them to navigate the map, damage player defenses, and reach the player base will accrue the best values for fitness. Each generation then, the most fit Proteans will have the most offspring, and the multivariate trait distribution of the population will change. This process of adaptation is what we hoped to encode into a tower defense game, and this paper represents our attempt to test the hypothesis that Project Hastur is an agent based model of quantitative trait evolution.
-
-#### Selection
-
-Selection occurs when there is a correlation between a trait (say... hit points or movement behavior) and **Fitness**. In biological populations, `Fitness` is usually defined in terms of the number of offspring produced by a given individual. We often measure proxies for fitness in empirical biology that are typically predictive of (or at least correlated with ) `Fitness`, such as seed set in plants, survivorship, or number of eggs. In our games, we can make explicit linkages between performance and fitness using `Fitness Functions`.
-
-For example, in Darwin's Demons the enemies accrue `Aggression` by moving downward on the screen. The closer they get to the bottom, the higher their `Aggression` score. if they move past the player and off the bottom of the screen, their `Aggression` score gets an even larger boost. After each wave, the enemies with the highest `Aggression` score also have the highest probability of mating and producing offspring. Thus, we have created an explicit link in which `Aggression` is correlated with `Fitness` (number of offspring). Our games often have more than one of these `Fitness Functions`. For example, the Protean Swarm in Darwin's Demons can also increase their mating chance with `Accuracy` (which measures how often they shoot at the player and how close they came to hitting the player) and `Lifetime` (which measures how long they last on the screen) .
-
-If we turn off the fitness functions, then after each wave the enemies undergo random mating. Adaptive evolution does not occur, but the enemy traits might still evolve randomly because of Random Genetic Drift.
-
-
-
-
-In designing an evolutionary game, or adding an evolutionary mechanism to a more general game design, each of the four components, variation, inheritance, selection, and time must be consider.
-
-### Variation
 
 The first design decision regarding variation is how much variation should there be in the initial population. This is known as standing genetic variation. That is should the initial population of enemies be identical, with variation only occurring after the first generation or should there be variation in the initial population. And if there is variation in the initial population should it be relatively limited or extreme.
 
@@ -170,21 +62,15 @@ Beyond the initial standing variation the mutational step adds variation in ever
 
 In general, smaller variation is biologically much more realistic, but higher variation will drive evolution faster be introducing more variation for selection work with. It is possible to have too much variation, if the amount of mutation swamps inheritance, i.e. if there's so much mutation that offspring don't meaningfully resemble their parents, then evolution stops working. There's no benefit to selecting more fit parents if mutation is so rampant it destroys the parents' evolutionary advantages.
 
-Standing Genetic Variation \[done above?\]
+*Controlling Variation in Project Hastur:* Each individual in the enemy population is defined by a digital genome of real numbers. There are 80 genes in the genome. Each Protean is diploid, such that its final trait value is calculated as the sum of the genetic values for the given locus on each chromosome. While all of these genes are used by the game engine to render a wide variety of visually distinct game enemies (see Figure x), some of the genes also affect Protean traits that are relevant to game play. These are the traits upon which the analyses in this paper were performed, and are defined in Table x.
 
+*Variation:* When the game begins, Protean trait values are instantiated using the starting values in table x with some variation drawn from a Gaussian distribution. This creates the standing genetic variation in the population upon which selection will act. When offspring are created (described below), additional mutational variance is introduced. In campaign mode, the per locus mutation rate and effect size vary depending on the map's degree of difficulty - more mutational variance causes the game to become much more difficult. In experiment mode, mutation rate and effect size are determined by the user. MUTATION RATE (u) is defined as the per locus probability that the genetic value of the locus will be changed by a number drawn from a Gaussian distribution with mean zero and standard deviation defined by the variable MUTATION EFFECT SIZE (e).
 
+## Inheritance
 
+**The addition of an inheritance model is the primary differentiator in our games that creates adaptation.**
 
-
-*Selection:*  Project Hastur specifies two fitness functions that determine the probability that Proteans will be selected to reproduce at the end of each generation.  The first Fitness Function, called BASE FITNESS  is related to the player’s base.  This is a number that specifies the closest distance to the player base that was achieved by a given Protean.  Should the Protean get right next to the base (a distance of zero), then BASE FITNESS includes the DAMAGE the Protean does to the base.  Lower BASE FITNESS values increase the probability of reproduction when the wave ends.  TOWER DAMAGE is the other fitness function used to calculate whether an individual will reproduce.  In this case, the game sums the total DAMAGE done by the Protean to any defensive structure.  TOTAL FITNESS is calculated by subtracting TOWER DAMAGE from BASE FITNESS.
-
-*Tournament Selection:*  At the end of each generation, we use tournament selection to identify individuals that will serve as parents.  To do this, the game randomly selects a sample of Proteans from the previous generation.  The number of individuals in this sample is a controllable parameter in experiment mode called TOURNAMENT SIZE.  The individual with the best (lowest) value for TOTAL FITNESS is selected as a parent.  A new tournament is then conducted to select the mate.  Reproduction then occurs as described above and a single offspring is passed to the population for the next generation.  This process is repeated until the population in the next generation has a number of individuals in it equal to POPULATION SIZE.   
-
-*Time:*  Over the course of each wave (defined in terms of generations), the Proteans with the trait values that best enable them to navigate the map, damage player defenses, and reach the player base will accrue the best values for fitness.  Each generation then, the most fit Proteans will have the most offspring, and the multivariate trait distribution of the population will change.  This process of adaptation is what we hoped to encode into a tower defense game, and this paper represents our attempt to test the hypothesis that Project Hastur is an agent based model of quantitative trait evolution. 
-
-## Tradeoffs and Design Decisions
-
-
+In most games, there is no relationship between enemies within a wave or between waves. They are instantiated (spawned) with developer defined traits at a specified rate, location, and time (or level or wave). This is the key difference in the games that our lab creates. In our games, the enemies traits are specified by digital genomes that they pass on to their offspring through a form of reproduction. If the enemy has a speed value of 4, that means that when it reproduces, its offspring inherit that speed value of 4. Most of the games we work on specify about 40 to 80 "genes" in the enemy genome, each of which can influence one or more game traits such as speed, fire rate, morphology, behavior, health, armor, resistances, etc.
 
 Inheritance is that passing of genes from parents to offspring. This can be done asexually, one parent is sufficient to create one or more offspring, mimicking the division process of bacteria. The entire parent genome is copied and then mutated to create the offspring's genome. Alternatively, inheritance can be done sexually with two parents contributing to the genome of the offspring. There are a number of ways of combining the genomes of two parents to create an offspring. The most common approaches are one-point crossover in which both genomes are 'cut' at the same point and the ends combined; two-point crossover in which a section of one parent's genome is spliced into the other parent's genome; and uniform crossover in which genes are stochastically drawn from either parent creating a uniform 'mixing' of the genes. In sexual reproduction it is common for each 'mating' to produce two offspring. With techniques like two-point crossover this means that there is balance between the parents - each offspring is majority from one parent, with a portion of the other parent's genome spliced in.
 
@@ -192,28 +78,27 @@ Generally, with sexual reproduction the individuals are treated as hermaphrodite
 
 Sexual vs asexual. Hermaphrodites? Encoding the digital genome (quantitative trait model vs discrete alleles)
 
+*Protean Traits:* Each individual in the enemy population is defined by a digital genome of real numbers. There are 80 genes in the genome. Each Protean is diploid, such that its final trait value is calculated as the sum of the genetic values for the given locus on each chromosome. While all of these genes are used by the game engine to render a wide variety of visually distinct game enemies (see Figure x), some of the genes also affect Protean traits that are relevant to game play. These are the traits upon which the analyses in this paper were performed, and are defined in Table x.
 
-### Selection
+*Inheritance:* Each "wave" of Proteans in Project Hastur is actually a discrete generation of enemies created from the previous generation using a tournament selection algorithm. Proteans that are selected as parents (see Tournament Selection, below for the algorithm) each contribute one of their chromosomes, determined randomly, for each locus. Project Hastur uses a free recombination model (each locus acts as its own chromosome), but the game can specify a customized matrix of recombination frequencies among loci if the user desires. The chromosomes passed to the offspring are each passed to the mutation algorithm, and each locus has a chance (specified by u) to receive a mutation. Once the new offspring's genome is instantiated, it is passed to the population for the next generation. Project Hastur records the unique ID numbers for each parent of every Protean. Proteans reproduce sexually, but are encoded as hermaphrodites.
 
-Selection is based on the individuals' fitnesses, calculated via a fitness function. The fitness function determines the 'direction' of evolution and thus is one of most important and subtle aspect of creating an evolutionary model. In many cases it takes multiple iterations to develop an effective fitness function because evolution's only 'goal' is to maximize fitness.
+On game maps that contain civilians, Proteans can also reproduce using an asexual model. In this case, if a Protean kills a civilian the Protean clones itself. This cloning process produces an offspring that is genetically identical to its parent during the gameplay phase itself (rather than waiting until the end of the wave). The number of clones produced by this process depends on the parent's size (COLLIDER SURFACE AREA). Smaller Proteans produce more clones than larger Proteans.
 
-For example, in our early versions of Darwin's Demons we used a fitness function consisting of three factors: how close enemies got to hitting the player when shooting (with fitness bonuses for direct hits), how far down the screen the enemies got (with fitness bonuses for reaching the bottom of the screen and costing the player a life), and survival time (how long they survived). It turned out that smart players could, and did, manipulate survival time. They would intentionally avoid shooting enemies that were non-aggressive (e.g. that sat in the corner not shooting). These enemies would acquire high fitness scores and reproduce more than other enemies. Very quickly the player could effectively breed 'space cows'. We were forced to remove survival time as a component of fitness (although it is an option that can be used in experiment mode).
+The model of reproduction and inheritance can have effects on gameplay.
 
-It is also important the fitness function creates a reasonable gradient for selection to act on. A simple fitness for Darwin's Demons would have been based purely on hitting the player and reaching the bottom of the screen (rather than on getting close to the player or close to the bottom of the screen). The problem with pure success as a fitness function is that very few enemies would succeed, and selection would have no variation in fitness to work on. Thus, a successful fitness function drives evolution even for partial success.
+## Selection
+
+Selection occurs when there is a correlation between a trait (say... hit points or movement behavior) and **Fitness**. In biological populations, `Fitness` is usually defined as the number of offspring produced by a given individual. We often measure proxies for fitness in empirical biology that are typically predictive of (or at least correlated with ) `Fitness`, such as seed set in plants, survivorship, or number of eggs in a nest. In our games, we can make explicit linkages between performance and fitness using `Fitness Functions`.
+
+For example, in Darwin's Demons the enemies accrue `Aggression` by moving downward on the screen. The closer they get to the bottom, the higher their `Aggression` score. if they move past the player and off the bottom of the screen, their `Aggression` score gets an even larger boost. After each wave, the enemies with the highest `Aggression` score also have the highest probability of mating and producing offspring. Thus, we have created an explicit link in which `Aggression` is correlated with `Fitness` (number of offspring). Our games often have more than one of these `Fitness Functions`. For example, the Protean Swarm in Darwin's Demons can also increase their mating chance with `Accuracy` (which measures how often they shoot at the player and how close they came to hitting the player) and `Lifetime` (which measures how long they last on the screen) .
+
+Project Hastur specifies two fitness functions that determine the probability that Proteans will be selected to reproduce at the end of each generation. The first Fitness Function, called BASE FITNESS specifies the closest distance to the player base that was achieved by a given Protean. Should the Protean get right next to the base (a distance of zero), then BASE FITNESS includes the DAMAGE the Protean does to the base. Lower BASE FITNESS values increase the probability of reproduction when the wave ends. TOWER DAMAGE is the other fitness function used to calculate whether an individual will reproduce. In this case, the game sums the total DAMAGE done by the Protean to any defensive structure. TOTAL FITNESS is calculated by subtracting TOWER DAMAGE from BASE FITNESS.
 
 Selection itself should include a stochastic component, favoring more fit individuals, but leaving opportunities for less fit individuals to be selected to maintain diversity within the population. Two common approaches are roulette wheel selection and tournament selection. Roulette wheel selection is 'fitness proportional' the probability of being selected is proportional to an individual's relative fitness. It is modeled as a roulette wheel in which each individual gets a roulette wheel 'slice' whose size is proportional to their fitness. Tournament selection is 'rank based', to pick a parent a small (typically 3-5) subset of the population is picked at random and the highest fitness individual in that subset wins the 'tournament' and the opportunity to reproduce. Individuals can be picked for multiple tournaments, so more fit individuals typically have several opportunities to reproduce and less fit individuals are unlike to win many, if any, tournaments. Rank based approaches, like tournament selection, have the advantage that if the population consists of individuals with very similar fitnesses, rank still produces a gradient to select on.
 
-Selection is measure in terms of the 'selection pressure' how likely it is for more fit individuals to be selected as parents. For example, in tournament selection the size of the tournament determines the amount of selection pressure. The larger the tournament size the harder it is for an individual with low fitness to get lucky and end up in a tournament of individuals it can beat, and each individual should participate in more tournaments giving the best individuals more opportunities to win and reproduce.
+*Tournament Selection:* At the end of each generation, we use tournament selection to identify individuals that will serve as parents. To do this, the game randomly selects a sample of Proteans from the previous generation. The number of individuals in this sample is a controllable parameter in experiment mode called TOURNAMENT SIZE. The individual with the best (lowest) value for TOTAL FITNESS is selected as a parent. A new tournament is then conducted to select the mate. Reproduction then occurs as described above and a single offspring is passed to the population for the next generation. This process is repeated until the population in the next generation has a number of individuals in it equal to POPULATION SIZE.
 
-To confirm that evolution is occurring its important to compare whatever technique is chosen to purely random (ignoring fitness) selection. Purely random selection should result in genetic drift, genes change randomly, with no obvious patterns. In contrast under working evolutionary models at least some genes should show clear evolutionary trends, e.g. genes associated with speed or resistance should clearly change over time.
-
-Fitness functions Mechanisms of selection
-
-Example: On vs off (adaptation vs drift)
-
-### Time 
-
-To make a successful, i.e. interesting and challenging, game evolution must occur within the time frame of the game. Natural, biological evolution can take thousands, tens of thousands, or more, generations to result in obvious changes. This is much too long for most games. Increasing the amount of variance and the amount of selection pressure can speed up the evolutionary process making it feasible for games. But there has to be a careful balance. Too much variance and good traits are no longer preserved. Too much selection and the population will converge on a single genotype, making the game less interesting - all opponents are identical - and limited variation for future evolution.
+Example: On vs off (adaptation vs drift)If we turn off the fitness functions, then after each wave the enemies undergo random mating. Adaptive evolution does not occur, but the enemy traits might still evolve randomly because of Random Genetic Drift.
 
 ```{r}
 #| echo: FALSE
@@ -286,6 +171,222 @@ Genavg <- all_the_data%>%
          TurnRate, Attraction0, Attraction1, Attraction2), mean))
 
 ```
+
+```{r}
+#| echo: FALSE
+singlerep <- all_the_data %>%
+  filter(Civilians == "OFF")%>%
+  filter(Gun == "Autocannon")%>%
+  filter(replicate == 5)
+
+ggplot(singlerep, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
+             size=0.5, alpha = 0.3)+
+  geom_smooth(color = "black")+
+  facet_grid(~Evolution)+
+  scale_color_continuous(low="blue", high = "red")
+  
+
+
+```
+
+Figure 1. Values of the *ScaleType0* gene in two replicates of Project Hastur over 50 generations of game play using a standardized defense of only Autocannon Towers. Each point represents an individual game enemy, and is colored according to Collider Surface Area, which measures body size. *ScaleType0* controls the size of the main body of the individual. LEFT: Fitness functions are turned OFF, resulting in the accumulation of mutational variance over time, but no change in mean size of the population. RIGHT: Fitness functions are turned ON, resulting in directional selection for increased body size.
+
+In Figure 1, we present an example of how the combination of inherited variation and selection via fitness functions can produce directional selection, in this case for larger enemies (which tend to have more Health. Extending this example, we can show that the patterns of trait adaptation in Project Hastur are in response to game conditions and strategies institute by the player. The data presented in Figure 1 used a standardized arrangement of Autocannon turrets on the same game map ("Crater Mountain"). The Autocannon turret relies on a raycast for targeting, firing numerous projectiles that essentially do not miss. We ran a total of 9 replicates each under these conditions (with and without fitness functions) using the Autocannon. We then ran additional replicates using the identical arrangement of towers using the Chip Shredder, a turret that fires a single, slower projectile that relies on collision detection. Figure 2 shows the pattern of trait evolution we observed under these conditions.
+
+```{r}
+#| echo: FALSE
+
+GenGun <- Genavg %>%
+  filter(Civilians == "OFF")
+
+
+ggplot(GenGun, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
+             size = 0.5)+
+  geom_smooth(color = "black")+
+  facet_grid(Gun~Evolution)+
+  scale_color_gradient(low = muted("blue"), high = "red")
+
+```
+
+Figure 2. Mean values of the *ScaleType0* gene in 9 replicates of Project Hastur under four gameplay conditions (36 total replicates). Each point represents the mean value of a replicate at each generation, and is colored according to Collider Surface Area, which measures body size. When Fitness Functions are inactive (LEFT column), mean trait values change randomly because of genetic drift. When Fitness Functions are active (RIGHT column), the Autocannon towers select for larger individuals (which have more Health), while the Chip Shredder towers select for smaller individuals (which are faster and can evade projectiles).
+
+We can test whether the observed changes in game traits are caused by selection by calculating the selection gradients within each generation. Selection gradients are standardized measures of the strength of selection, calculated by measuring the slope (Beta) of the relationship between a particular trait and fitness. In this case, we measure fitness by directly calculating the number of offspring for each individual. An estimate of Beta=0 indicates no selection. Positive values of Beta indicate directional selection for increased trait values, and negative values the opposite. Figure 3 shows individual estimates of Beta for each replicate in each generation. Note that the population size of 200 individuals limits our power to detect signficantly different values from 0, but combining replicates reveals a general pattern of positive directional selection on the ScaleType0 gene by the Autocannons, and negative directional selection on the ScaleType0 gene by the Chip Shredders.
+
+```{r}
+#| echo: FALSE
+
+traittemp<-all_the_data%>%
+  select(Generation, relfit, file, Evolution, Gun, Civilians, ScaleType0)%>%
+  group_by(Generation, file, Evolution, Gun, Civilians)%>%
+  mutate(scaleST0 = scale(ScaleType0, center = TRUE))%>%
+  mutate(scaleST02 = scaleST0*scaleST0)
+
+Gradients <- traittemp %>%
+  group_by(Generation, file, Evolution, Gun, Civilians) %>%
+  do({
+    model <- lm(relfit ~ scaleST0 + scaleST02, data = .)
+    data.frame(
+      Beta = coefficients(model)[2],
+      PB = summary(model)$coef[2, 4]
+    )
+  })
+
+Gradients <- Gradients %>%
+  mutate(sig = if_else(PB < 0.05 , "Y", "N"))
+
+GunFit<- Gradients %>%
+  filter(Civilians == "OFF")
+
+CivFit<- Gradients %>%
+  filter(Evolution == "OFF")
+
+ggplot(GunFit, aes(x=Generation, y = Beta))+
+  geom_point(aes(color = sig), size = 0.3, alpha = 0.6)+
+  geom_smooth()+
+  scale_color_manual(values = c("black","red"))+
+  geom_hline(yintercept=0, linetype="dashed", color = "black")+
+  theme(legend.position = "none",
+        panel.background = element_blank())+
+  facet_grid(Gun~Evolution)
+
+
+```
+
+Figure 3. Estimates of the selection gradient, Beta, for the ScaleType0 gene in Project Hastur. Red points indicate estimates of Beta that are significantly different from 0 in individual tests, while the blue line indicates the Loess estimate of Beta across the entire experimental condition.
+
+As Figures 2 and 3 show, the type of tower used in the defensive strategy has a dramatic effect on the evolutionary trajectory of the game enemies. This example is a simplified experiment intended to isolate a single trait's response to manipulation of a single variable. The enemies in Project Hastur have more than 20 traits, and the defensive combinations available to the player are inumerable. This creates a great deal of potential variation in gameplay.
+
+In project Hastur, we often observe variation in the evolutionary outcomes even when gameplay conditions are identical. In Figure 3, we show a heatmap of the standardized trait means across 9 replicates of the exact same game conditions. The first two rows of the heatmap (replicates 2 and 3) are a distinct cluster representing an outcome dominated by small and fast enemies with a large sight radius. The remainder of the replicates produced some variation of the large, slow "tanks" that evolve to absorb most of the hits from the Autocannons.
+
+```{r}
+#| echo: FALSE
+
+files <- list.files(pattern = "*.csv", full.names = TRUE)
+
+AutoCiv <- data.frame()
+for(csv in files){
+  d <- read.csv(csv, as.is=T, header=T)
+  sst <- t(as.data.frame(strsplit(csv, "")))
+  d['file'] = csv
+  d['Tower']=sst[1,3]
+  d['replicate']=sst[1,7]
+
+
+  
+  P1Babies <- as.data.frame(table(as.factor(d$P1ID)))
+  colnames(P1Babies)<-c("ID", "Babies1")
+  P2Babies <- as.data.frame(table(as.factor(d$P2ID)))
+  colnames(P2Babies)<-c("ID", "Babies2")
+  d1<-merge(d,P1Babies, by = "ID", all=TRUE )
+  d1[is.na(d1)] <- 0
+  d2<-merge(d1, P2Babies, by = "ID", all=TRUE)
+  d2[is.na(d2)] <- 0
+  
+  d2$Offspring <-d2$Babies1+d2$Babies2
+  d2$relfit <- d2$Offspring/2
+  d2<-subset(d2, ID > -1)
+  
+  AutoCiv <- rbind(AutoCiv, d2)
+  print(csv)
+}
+
+AutoCiv <- AutoCiv%>%
+  mutate(Evolution = "ON")%>%
+  mutate(Gun = "Autocannon")%>%
+  mutate(Civilians = "ON")
+
+AC49 <- AutoCiv %>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,TurnRate, Attraction0, Attraction1, Attraction2, file, Evolution, replicate, Civilians, Gun, Offspring, relfit) %>%
+  filter(Generation == 49)
+
+AutoGenAvg <- AutoCiv%>%
+  group_by(Generation, Tower, replicate, Gun, Evolution, Civilians)%>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, Gun,
+         ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, file, replicate, Civilians,
+         Offspring, relfit, Evolution, Gun) %>%
+  summarize(across(c(Health, ColliderSurfaceArea, ScaleType0,
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2), mean))
+paletteLength <- 50
+myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
+# length(breaks) == length(paletteLength) + 1
+# use floor and ceiling to deal with even/odd length pallettelengths
+
+Heatmap<- AC49 %>%
+  select(Health, ColliderSurfaceArea, 
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, replicate)%>%
+  group_by(replicate)%>%
+  summarize_all(mean, na.rm = TRUE)
+
+
+
+Heatscale<-Heatmap%>%
+  transmute(across(c(Health, ColliderSurfaceArea, 
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2),
+         scale))
+  
+Heatmatrix <- as.matrix(Heatscale)
+
+rownames(Heatmatrix)<-Heatmap$replicate
+
+myBreaks <- c(seq(min(Heatmatrix), 0, length.out=ceiling(paletteLength/2) + 1), 
+              seq(max(Heatmatrix)/paletteLength, max(Heatmatrix), length.out=floor(paletteLength/2)))
+
+
+
+# Sort your data by row names
+Heatmatrix <- Heatmatrix[order(rownames(Heatmatrix)),]
+
+# Generate the heatmap
+pheatmap(Heatmatrix, 
+         cluster_rows = TRUE, # don't cluster rows
+         cluster_cols = TRUE, # don't cluster columns
+         clustering_distance_cols = "euclidean", 
+         clustering_distance_rows = "euclidean", 
+         clustering_method = "complete",
+         color = myColor, 
+         breaks = myBreaks)
+```
+
+Figure 3. Heatmap of traits (columns) for 9 replicates (rows) of Project Hastur using the Autocannon conditions from Figures1 and 2. Each cell represents the Z-score of that trait, with each unit change representing one standard deviation from the overall mean of zero.
+
+This variation in evolutionary outcomes is inherent to the stochastic nature of the evolutionary model. New mutations occur randomly, and the rather small population sizes cause random genetic drift. Even within a single game replicate, we can sometimes observe subdivision of the population as evolution drives individuals toward two separate peaks in the fitness landscape.
+
+```{r}
+
+
+
+ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = SightRange),
+             size=0.1, alpha = 0.1)+
+  geom_smooth()+
+  scale_color_gradient(low = muted("blue"),
+
+  high = "red",
+
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "colour")+
+  facet_wrap(~replicate)
+```
+
+For example, when we plot the individual values of the ScaleType0 gene and color by the Sight Range trait, we observe that replicates 2 and 3 are clearly evolving towards smaller individuals. Further, the individual patterns of evolution among the replicates differ in their temporal dynamics. The most extreme example is replicate 8, in which two sub-populations are clearly present between generation 25 and 40, after which point the larger individuals out-compete the smaller and the mean size of the enemies changes dramatically.
+
+## Time
+
+Generational model = waves
+
+Continuous model
+
+The concept of time in video games is often defined in terms of waves or levels. Both of these terms imply a progression toward the game's goal, along with a corresponding increase in difficulty. In evolutionary games, time is specified in terms of generations. A wave of enemies begin the game, the player defeats them, and then the next wave is created with Inheritance using a mating function specified as described above. As the generations (waves) proceed, the enemies with traits that are best able to optimize the fitness functions have more offspring, and the population adapts to the game play conditions. Most of these conditions are created by player choices and playstyle, and thus the enemies adapt to the player. Difficulty increases organically and repeated gameplay often creates novel adaptive solutions to the same play style.
+
+To make an interesting and challenging game, evolution must occur within the rather limited time frame of gameplay. In nature, biological evolution can take thousands to tens of thousands of generations to result in obvious changes. This is much too long for most games, necessitating sacrifices in realism of the model. Potential changes to model parameters include increasing the amount of genetic variance and selection pressure, both of which can speed up the evolutionary process. But there has to be a careful balance. Too much variance and advantageous traits can be lost to mutation. Too much selection and the population will converge on a single genotype, making the game less interesting because all opponents are identical and limiting variation for future evolution.
 
 ```{r}
 #| echo: FALSE
@@ -437,9 +538,6 @@ AutoGenAvg <- AutoCiv%>%
          SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
          TurnRate, Attraction0, Attraction1, Attraction2), mean))
 
-ggplot(AutoCiv, aes(x=Generation, y= ColliderSurfaceArea))+
-  geom_point(aes(x=Generation, y= ColliderSurfaceArea, color = SightRange))+
-  geom_smooth()
 
 ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
   geom_point(aes(x=Generation, y= ScaleType0, color = SightRange),
@@ -712,7 +810,7 @@ ggplot(Twin2counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))
 
 ```
 
-# \<\<\<\<\<\<\< HEAD
+# 
 
 ```{r}
 #| eval: false
@@ -800,32 +898,30 @@ ggplot(Gradients, aes(x=Wave.Number, y = Beta))+
 
 ```
 
-
-### Time
-
-Generational model = waves
-
-Continuous model
-
-#### Time
-
-The concept of time in video games is often defined in terms of waves or levels. Both of these terms imply a progression toward the game's goal, along with a corresponding increase in difficulty. In our games, we usually specify time in terms of generations. A wave of enemies begin the game, the player defeats them, and then the next wave is created with Inheritance using a mating function specified as described above. As the generations (waves) proceed, the enemies with traits that are best able to optimize the fitness functions have more offspring, and the population adapts to the game play conditions. Most of these conditions are created by player choices and playstyle, and thus the enemies adapt to the player. Difficulty increases organically and repeated gameplay often creates novel adaptive solutions to the same play style.
-
-
-
-
-### Evolutionary Model
-### Time
-
-Generational model = waves
-
-Continuous model
-
 ### Educational Outcomes
 
 We reasoned that playing these types of games might have implications for STEM education. The success of the player is based on her comprehension and application of principles of evolutionary biology. The parallels to real world examples are numerous, and include the rapid evolution of antibiotic resistance in microbial pathogens, adaptation of crop pests to chemical and biological control measures, and behavioral adaptation to captivity in domesticated animals.
 
 Adding biological evolution to video games makes the games better for the game player and facilitates player comprehension of complex concepts that are hard to teach.
 
+The basic evolutionary model used in the game studio projects consists of four key elements: selection, inheritance, variation, and time. In each game there is a population of enemies that 'attack' the player. At the end of each wave/generation each enemy is assigned a fitness value based on how well it performed. Typically, this includes a measure of how much damage it did to the player or their resources or lives. However, in many cases the enemies are defeated before they inflict and damage, so fitness also measures how close they came to doing damage, either by shooting close to the player or by getting close to the player. This is necessary to make sure that there is a broad fitness gradient - i.e. that the majority of the enemies do not get assigned the same fitness.
 
+Once the enemies have been assigned a fitness based on their performance against the player the enemies with the highest fitness are *selected* to reproduce. There are a number of difference selection techniques, but all of them combine favoring the most fit individuals to drive evolution with some level of stochasticity to maintain a diverse population. Over selection of a few best individuals can lead to a population with too little diversity to effectively evolve.
 
+The individuals selected to reproduce pass their digital genes into the next generation in a form of *inheritance*. Commonly two selected individuals will mix their digital genes in a form of simulated sexual reproduction. This increases the *variation* in the population by creating new hybrids.
+
+Additionally the newly generated genomes undergo a mutation step in which some of their values have random noise added. This further increase the *variation* in the population of enemies. Mutation is typically applied at rates so that 1-3 gene values vary per individual per generation. This is several orders of magnitude higher that natural, biological evolution, which is necessary to increase the rate of evolution to the point where it is observable to the character and results in change that is meaningful on the timescale of a game that only lasts tens of generations. This higher mutation rate works because there are no lethal mutations in our models, all of the mutations effect traits like speed, strength, resistance, etc. whereas in biological evolution significant mutations are often lethal in the form of failed biological processes.
+
+Finally, this process gets repeated every wave - every evolutionary generation - in the game. This repetition of the evolutionary process over *time* is what allows the enemies to evolve to become tougher opponents.
+
+These basic components: selection, inheritance, variation, and time can be implemented in many games to add an evolutionary component. The critical aspect of evolution over other techniques to scale difficulty is that evolution is drive purely by the enemies performance against the player. If the player implements a novel strategy, whatever enemies perform well against that strategy will reproduce. The game automatically builds in difficulty in response to the player's choices.
+
+Variation Inheritance Selection Time \[done above?\]
+
+### Project Hastur
+
+*Development:* Project Hastur is a tower defense video game developed by students in the Polymorphic Games studio at the University of Idaho. The game features a campaign of 16 original game maps, as well as an experiment mode (described below) that allows the game to serve as a simulation model. Project Hastur was released on the Steam game site on Feb 12th, 2019. The unique feature of Project Hastur is that the enemies in the game model a finite population defined by digital genomes of quantitative traits.
+
+*Gameplay:* In Project Hastur, the player must defend their base against waves of enemies called the Protean Swarm. The player defends their base by placing defensive towers in strategic locations, and the towers each have different capabilities, strengths, and weaknesses. In campaign mode, the player unlocks new game maps and defensive capabilities as they proceed through the story. Each map is defined by victory conditions that involve defeating a set number of enemy generations or building their defenses to specific criteria. Enemies appear in "waves", a classic trope of tower defense games in which the developers script the number and type of enemies that appear over the course of the level. In Project Hastur, however, the enemy waves are part of a generational evolutionary model - each new enemy wave is comprised of the offspring of the most successful parents in the previous wave. In this way, we programmed Project Hastur to become an evolutionary tower defense game in which the enemy population adapts as the game proceeds.
+
+The defensive capabilities of the player include four different categories of tower with qualitative differences in how they interact with the physics engine of the game. These include kinetic, ice, flame, and acid based towers, with each category including 4 different versions of upgrades. In addition, the player can access and upgrade two different abilities that are activated on demand with a cooldown - robotic minions and airstrikes.
