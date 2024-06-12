@@ -4,3 +4,6 @@
 .Ruserdata
 
 /.quarto/
+
+*.mp4
+*.pptx

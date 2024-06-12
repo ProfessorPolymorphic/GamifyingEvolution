@@ -1,0 +1,751 @@
+---
+title: "Bayesian"
+author: "Barrie D. Robison"
+
+---
+
+
+
+Example: On vs off (adaptation vs drift)If we turn off the fitness functions, then after each wave the enemies undergo random mating. Adaptive evolution does not occur, but the enemy traits might still evolve randomly because of Random Genetic Drift.
+
+```{r}
+#| echo: FALSE
+#| output: FALSE
+  
+library(tidyverse)
+library(purrr)
+library(vroom)
+library(pheatmap)
+library(scales)
+library(dplyr)
+```
+
+```{r}
+#| echo: FALSE
+#| output: FALSE
+
+path <- "Hastur"
+files <- list.files(path, pattern = "*.csv", full.names = TRUE)
+
+all_the_data = data.frame()
+for(csv in files){
+  d <- read.csv(csv, as.is=T, header=T)
+  sst <- t(as.data.frame(strsplit(csv, "")))
+  d['file'] = csv
+  d['Tower']=sst[1,8]
+  d['replicate']=sst[1,11]
+
+
+  
+  P1Babies <- as.data.frame(table(as.factor(d$P1ID)))
+  colnames(P1Babies)<-c("ID", "Babies1")
+  P2Babies <- as.data.frame(table(as.factor(d$P2ID)))
+  colnames(P2Babies)<-c("ID", "Babies2")
+  d1<-merge(d,P1Babies, by = "ID", all=TRUE )
+  d1[is.na(d1)] <- 0
+  d2<-merge(d1, P2Babies, by = "ID", all=TRUE)
+  d2[is.na(d2)] <- 0
+  
+  d2$Offspring <-d2$Babies1+d2$Babies2
+  d2$relfit <- d2$Offspring/2
+  d2<-subset(d2, ID > -1)
+  
+  all_the_data <- rbind(all_the_data, d2)
+  print(csv)
+}
+
+all_the_data <- all_the_data %>%
+  mutate(Evolution = 
+           if_else(Tower == "X" | Tower == "Q" | Tower == "C"| Tower == "H", "OFF", "ON"))%>%
+  mutate(Gun = if_else(Tower == "X" | Tower == "K" | Tower == "C", "Autocannon", "Chip Shredder"))%>%
+  mutate(Civilians = if_else(Tower == "H" | Tower == "C", "ON", "OFF"))
+
+df49 <- all_the_data %>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea,
+         ScaleType0,
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, file, Tower, replicate, Civilians,
+         Offspring, relfit) %>%
+  filter(Generation == 49)
+
+Genavg <- all_the_data%>%
+  group_by(Generation, Tower, replicate, Gun, Evolution, Civilians)%>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea,
+         ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, file, Tower, replicate, Civilians,
+         Offspring, relfit, Evolution, Gun) %>%
+  summarize(across(c(Health, ColliderSurfaceArea, ScaleType0,
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2), mean))
+
+```
+
+
+
+```{r}
+#| echo: FALSE
+singlerep <- all_the_data %>%
+  filter(Civilians == "OFF")%>%
+  filter(Gun == "Autocannon")%>%
+  filter(replicate == 5)
+
+Fig1<- ggplot(singlerep, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
+             size=0.5, alpha = 0.3)+
+  geom_smooth(color = "black")+
+  facet_grid(~Evolution)+
+  scale_color_continuous(low="blue", high = "red")+
+  theme(legend.position = "bottom")
+  
+ggsave("Fig1.png", Fig1, width = 4, height = 4, dpi = 300)
+
+
+```
+
+Figure 1. Values of the *ScaleType0* gene in two replicates of Project Hastur over 50 generations of game play using a standardized defense of only Autocannon Towers. Each point represents an individual game enemy, and is colored according to Collider Surface Area, which measures body size. *ScaleType0* controls the size of the main body of the individual. LEFT: Fitness functions are turned OFF, resulting in the accumulation of mutational variance over time, but no change in mean size of the population. RIGHT: Fitness functions are turned ON, resulting in directional selection for increased body size.
+
+In Figure 1, we present an example of how the combination of inherited variation and selection via fitness functions can produce directional selection, in this case for larger enemies (which tend to have more Health. Extending this example, we can show that the patterns of trait adaptation in Project Hastur are in response to game conditions and strategies institute by the player. The data presented in Figure 1 used a standardized arrangement of Autocannon turrets on the same game map ("Crater Mountain"). The Autocannon turret relies on a raycast for targeting, firing numerous projectiles that essentially do not miss. We ran a total of 9 replicates each under these conditions (with and without fitness functions) using the Autocannon. We then ran additional replicates using the identical arrangement of towers using the Chip Shredder, a turret that fires a single, slower projectile that relies on collision detection. Figure 2 shows the pattern of trait evolution we observed under these conditions.
+
+```{r}
+#| echo: FALSE
+
+GenGun <- Genavg %>%
+  filter(Civilians == "OFF")
+
+
+Fig2<- ggplot(GenGun, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = ColliderSurfaceArea),
+             size = 0.5)+
+  geom_smooth(color = "black")+
+  facet_grid(Gun~Evolution)+
+  scale_color_gradient(low = muted("blue"), high = "red")+
+  theme(legend.position = "bottom")
+
+ggsave("Fig2.png", Fig2, width = 4, height = 4, dpi = 300)
+
+
+```
+
+Figure 2. Mean values of the *ScaleType0* gene in 9 replicates of Project Hastur under four gameplay conditions (36 total replicates). Each point represents the mean value of a replicate at each generation, and is colored according to Collider Surface Area, which measures body size. When Fitness Functions are inactive (LEFT column), mean trait values change randomly because of genetic drift. When Fitness Functions are active (RIGHT column), the Autocannon towers select for larger individuals (which have more Health), while the Chip Shredder towers select for smaller individuals (which are faster and can evade projectiles).
+
+We can test whether the observed changes in game traits are caused by selection by calculating the selection gradients within each generation. Selection gradients are standardized measures of the strength of selection, calculated by measuring the slope (Beta) of the relationship between a particular trait and fitness. In this case, we measure fitness by directly calculating the number of offspring for each individual. An estimate of Beta=0 indicates no selection. Positive values of Beta indicate directional selection for increased trait values, and negative values the opposite. Figure 3 shows individual estimates of Beta for each replicate in each generation. Note that the population size of 200 individuals limits our power to detect signficantly different values from 0, but combining replicates reveals a general pattern of positive directional selection on the ScaleType0 gene by the Autocannons, and negative directional selection on the ScaleType0 gene by the Chip Shredders.
+
+```{r}
+#| echo: FALSE
+
+traittemp<-all_the_data%>%
+  select(Generation, relfit, file, Evolution, Gun, Civilians, ScaleType0)%>%
+  group_by(Generation, file, Evolution, Gun, Civilians)%>%
+  mutate(scaleST0 = scale(ScaleType0, center = TRUE))%>%
+  mutate(scaleST02 = scaleST0*scaleST0)
+
+Gradients <- traittemp %>%
+  group_by(Generation, file, Evolution, Gun, Civilians) %>%
+  do({
+    model <- lm(relfit ~ scaleST0 + scaleST02, data = .)
+    data.frame(
+      Beta = coefficients(model)[2],
+      PB = summary(model)$coef[2, 4]
+    )
+  })
+
+Gradients <- Gradients %>%
+  mutate(sig = if_else(PB < 0.05 , "Y", "N"))
+
+GunFit<- Gradients %>%
+  filter(Civilians == "OFF")
+
+CivFit<- Gradients %>%
+  filter(Evolution == "OFF")
+
+Fig3<-ggplot(GunFit, aes(x=Generation, y = Beta))+
+  geom_point(aes(color = sig), size = 0.3, alpha = 0.6)+
+  geom_smooth(fill="blue")+
+  scale_color_manual(values = c("black","red"))+
+  geom_hline(yintercept=0, linetype="dashed", color = "black")+
+  theme(legend.position = "none",
+        panel.background = element_blank())+
+  facet_grid(Gun~Evolution)
+
+ggsave("Fig3.png", Fig3, width = 4, height = 4, dpi = 300)
+
+
+
+
+```
+
+Figure 3. Estimates of the selection gradient, Beta, for the ScaleType0 gene in Project Hastur. Red points indicate estimates of Beta that are significantly different from 0 in individual tests, while the blue line indicates the Loess estimate of Beta across the entire experimental condition.
+
+```{r}
+
+
+library(brms)
+
+
+# Define the model formula including linear and quadratic terms
+formula <- bf(relfit ~ scaleST0 + I(scaleST0^2)+ (1|file))
+
+# Define priors (optional, but recommended)
+priors <- c(
+  set_prior("normal(0, 10)", class = "b"),  # Prior for the fixed effects
+  set_prior("student_t(3, 0, 10)", class = "Intercept"),  # Prior for the intercept
+  set_prior("student_t(3, 0, 10)", class = "sd")  # Prior for the random effects
+)
+
+traittemp<-all_the_data%>%
+  select(Generation, relfit, file, Evolution, Gun, Civilians, ScaleType0)%>%
+  group_by(Generation, file, Evolution, Gun, Civilians)%>%
+  mutate(scaleST0 = scale(ScaleType0, center = TRUE))%>%
+  mutate(scaleST02 = scaleST0*scaleST0)
+
+Gradients <- traittemp %>%
+  group_by(Generation, file, Evolution, Gun, Civilians) %>%
+  do({
+    model <- lm(relfit ~ scaleST0 + scaleST02, data = .)
+    data.frame(
+      Beta = coefficients(model)[2],
+      PB = summary(model)$coef[2, 4]
+    )
+  })
+
+smalltrait <- traittemp%>%
+  filter(Evolution == "ON", Gun == "Autocannon", Civilians == "OFF", Generation == 20)%>%
+  mutate(relfit = round(relfit))
+
+# Fit the Bayesian GLMM
+bayesian_model <- brm(formula, 
+                      data = smalltrait, 
+                      family = negbinomial(), 
+                      prior = priors, 
+                      chains = 4, 
+                      iter = 4000, 
+                      warmup = 500, 
+                      cores = 4, 
+  control = list(adapt_delta = 0.95))
+
+# Summarize the model
+summary(bayesian_model)
+
+# Plot the posterior distributions of the coefficients
+plot(bayesian_model)
+
+```
+
+
+```{r}
+
+smalltrait2 <- traittemp%>%
+  filter(Evolution == "ON", Gun == "Autocannon", Civilians == "OFF", Generation <30, Generation >20)%>%
+  mutate(relfit = round(relfit))
+
+# Define the model formula including linear and quadratic terms with both random slopes and autoregressive structure
+
+formula2 <- bf(relfit ~ scaleST0 + I(scaleST0^2)+ (1 + Generation | file) + ar(gr = file, p = 1))
+
+
+# Fit the Bayesian GLMM with both random slopes and autoregressive terms
+bayesian_model2 <- brm(
+  formula2, 
+  data = smalltrait2, 
+  family = negbinomial(), 
+  prior = priors, 
+  chains = 4, 
+  iter = 4000, 
+  warmup = 1000, 
+  cores = 4, 
+  control = list(adapt_delta = 0.95)
+)
+
+summary(bayesian_model2)
+
+```
+
+
+
+
+
+As Figures 2 and 3 show, the type of tower used in the defensive strategy has a dramatic effect on the evolutionary trajectory of the game enemies. This example is a simplified experiment intended to isolate a single trait's response to manipulation of a single variable. The enemies in Project Hastur have more than 20 traits, and the defensive combinations available to the player are inumerable. This creates a great deal of potential variation in gameplay.
+
+In project Hastur, we often observe variation in the evolutionary outcomes even when gameplay conditions are identical. In Figure 3, we show a heatmap of the standardized trait means across 9 replicates of the exact same game conditions. The first two rows of the heatmap (replicates 2 and 3) are a distinct cluster representing an outcome dominated by small and fast enemies with a large sight radius. The remainder of the replicates produced some variation of the large, slow "tanks" that evolve to absorb most of the hits from the Autocannons.
+
+```{r}
+#| echo: FALSE
+
+files <- list.files(pattern = "*.csv", full.names = TRUE)
+
+AutoCiv <- data.frame()
+for(csv in files){
+  d <- read.csv(csv, as.is=T, header=T)
+  sst <- t(as.data.frame(strsplit(csv, "")))
+  d['file'] = csv
+  d['Tower']=sst[1,3]
+  d['replicate']=sst[1,7]
+
+
+  
+  P1Babies <- as.data.frame(table(as.factor(d$P1ID)))
+  colnames(P1Babies)<-c("ID", "Babies1")
+  P2Babies <- as.data.frame(table(as.factor(d$P2ID)))
+  colnames(P2Babies)<-c("ID", "Babies2")
+  d1<-merge(d,P1Babies, by = "ID", all=TRUE )
+  d1[is.na(d1)] <- 0
+  d2<-merge(d1, P2Babies, by = "ID", all=TRUE)
+  d2[is.na(d2)] <- 0
+  
+  d2$Offspring <-d2$Babies1+d2$Babies2
+  d2$relfit <- d2$Offspring/2
+  d2<-subset(d2, ID > -1)
+  
+  AutoCiv <- rbind(AutoCiv, d2)
+  print(csv)
+}
+
+AutoCiv <- AutoCiv%>%
+  mutate(Evolution = "ON")%>%
+  mutate(Gun = "Autocannon")%>%
+  mutate(Civilians = "ON")
+
+AC49 <- AutoCiv %>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,TurnRate, Attraction0, Attraction1, Attraction2, file, Evolution, replicate, Civilians, Gun, Offspring, relfit) %>%
+  filter(Generation == 49)
+
+AutoGenAvg <- AutoCiv%>%
+  group_by(Generation, Tower, replicate, Gun, Evolution, Civilians)%>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, Gun,
+         ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, file, replicate, Civilians,
+         Offspring, relfit, Evolution, Gun) %>%
+  summarize(across(c(Health, ColliderSurfaceArea, ScaleType0,
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2), mean))
+paletteLength <- 50
+myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
+# length(breaks) == length(paletteLength) + 1
+# use floor and ceiling to deal with even/odd length pallettelengths
+
+Heatmap<- AC49 %>%
+  select(Health, ColliderSurfaceArea, 
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, replicate)%>%
+  group_by(replicate)%>%
+  summarize_all(mean, na.rm = TRUE)
+
+
+
+Heatscale<-Heatmap%>%
+  transmute(across(c(Health, ColliderSurfaceArea, 
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2),
+         scale))
+  
+Heatmatrix <- as.matrix(Heatscale)
+
+rownames(Heatmatrix)<-Heatmap$replicate
+
+myBreaks <- c(seq(min(Heatmatrix), 0, length.out=ceiling(paletteLength/2) + 1), 
+              seq(max(Heatmatrix)/paletteLength, max(Heatmatrix), length.out=floor(paletteLength/2)))
+
+
+
+# Sort your data by row names
+Heatmatrix <- Heatmatrix[order(rownames(Heatmatrix)),]
+
+# Generate the heatmap
+Fig4<- pheatmap(Heatmatrix, 
+         cluster_rows = TRUE, # don't cluster rows
+         cluster_cols = TRUE, # don't cluster columns
+         clustering_distance_cols = "euclidean", 
+         clustering_distance_rows = "euclidean", 
+         clustering_method = "complete",
+         color = myColor, 
+         breaks = myBreaks)
+
+
+
+ggsave("Fig4.png", Fig4, width = 4, height = 4, dpi = 300)
+```
+
+Figure 3. Heatmap of traits (columns) for 9 replicates (rows) of Project Hastur using the Autocannon conditions from Figures1 and 2. Each cell represents the Z-score of that trait, with each unit change representing one standard deviation from the overall mean of zero.
+
+This variation in evolutionary outcomes is inherent to the stochastic nature of the evolutionary model. New mutations occur randomly, and the rather small population sizes cause random genetic drift. Even within a single game replicate, we can sometimes observe subdivision of the population as evolution drives individuals toward two separate peaks in the fitness landscape.
+
+```{r}
+#| echo: FALSE
+#| output: FALSE
+
+
+Fig5<- ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = SightRange),
+             size=0.1, alpha = 0.1)+
+  geom_smooth()+
+  scale_color_gradient(low = muted("blue"),
+
+  high = "red",
+
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "colour")+
+  facet_wrap(~replicate)+
+  theme(legend.position = "bottom")
+
+ggsave("Fig5.png", Fig5, width = 4, height = 4, dpi = 300)
+
+
+```
+
+For example, when we plot the individual values of the ScaleType0 gene and color by the Sight Range trait, we observe that replicates 2 and 3 are clearly evolving towards smaller individuals. Further, the individual patterns of evolution among the replicates differ in their temporal dynamics. The most extreme example is replicate 8, in which two sub-populations are clearly present between generation 25 and 40, after which point the larger individuals out-compete the smaller and the mean size of the enemies changes dramatically.
+
+## Time
+
+Generational model = waves
+
+Continuous model
+
+The concept of time in video games is often defined in terms of waves or levels. Both of these terms imply a progression toward the game's goal, along with a corresponding increase in difficulty. In evolutionary games, time is specified in terms of generations. A wave of enemies begin the game, the player defeats them, and then the next wave is created with Inheritance using a mating function specified as described above. As the generations (waves) proceed, the enemies with traits that are best able to optimize the fitness functions have more offspring, and the population adapts to the game play conditions. Most of these conditions are created by player choices and playstyle, and thus the enemies adapt to the player. Difficulty increases organically and repeated gameplay often creates novel adaptive solutions to the same play style.
+
+To make an interesting and challenging game, evolution must occur within the rather limited time frame of gameplay. In nature, biological evolution can take thousands to tens of thousands of generations to result in obvious changes. This is much too long for most games, necessitating sacrifices in realism of the model. Potential changes to model parameters include increasing the amount of genetic variance and selection pressure, both of which can speed up the evolutionary process. But there has to be a careful balance. Too much variance and advantageous traits can be lost to mutation. Too much selection and the population will converge on a single genotype, making the game less interesting because all opponents are identical and limiting variation for future evolution.
+
+
+```{r}
+traittemp<-all_the_data%>%
+  select(Generation, relfit, file, Evolution, Gun, Civilians, ScaleType0)%>%
+  group_by(Generation, file, Evolution, Gun, Civilians)%>%
+  mutate(scaleST0 = scale(ScaleType0, center = TRUE))%>%
+  mutate(scaleST02 = scaleST0*scaleST0)
+
+Gradients <- traittemp %>%
+  group_by(Generation, file, Evolution, Gun, Civilians) %>%
+  do({
+    model <- lm(relfit ~ scaleST0 + scaleST02, data = .)
+    data.frame(
+      Beta = coefficients(model)[2],
+      PB = summary(model)$coef[2, 4]
+    )
+  })
+
+Gradients <- Gradients %>%
+  mutate(sig = if_else(PB < 0.05 , "Y", "N"))
+
+GunFit<- Gradients %>%
+  filter(Civilians == "OFF")
+
+CivFit<- Gradients %>%
+  filter(Evolution == "OFF")
+
+
+ggplot(CivFit, aes(x=Generation, y = Beta))+
+  geom_point(aes(color = sig))+
+  geom_smooth()+
+  scale_color_manual(values = c("lightgrey","red"))+
+  geom_hline(yintercept=0, linetype="dashed", color = "black")+
+  theme(legend.position = "none")+
+  facet_grid(Gun~Civilians)
+
+```
+
+Hidden fitness functions
+
+Example: Civilians and clonal reproduction.
+
+```{r}
+#| echo: FALSE
+#| output: FALSE
+
+
+files <- list.files(pattern = "*.csv", full.names = TRUE)
+
+AutoCiv <- data.frame()
+for(csv in files){
+  d <- read.csv(csv, as.is=T, header=T)
+  sst <- t(as.data.frame(strsplit(csv, "")))
+  d['file'] = csv
+  d['Tower']=sst[1,3]
+  d['replicate']=sst[1,7]
+
+
+  
+  P1Babies <- as.data.frame(table(as.factor(d$P1ID)))
+  colnames(P1Babies)<-c("ID", "Babies1")
+  P2Babies <- as.data.frame(table(as.factor(d$P2ID)))
+  colnames(P2Babies)<-c("ID", "Babies2")
+  d1<-merge(d,P1Babies, by = "ID", all=TRUE )
+  d1[is.na(d1)] <- 0
+  d2<-merge(d1, P2Babies, by = "ID", all=TRUE)
+  d2[is.na(d2)] <- 0
+  
+  d2$Offspring <-d2$Babies1+d2$Babies2
+  d2$relfit <- d2$Offspring/2
+  d2<-subset(d2, ID > -1)
+  
+  AutoCiv <- rbind(AutoCiv, d2)
+  print(csv)
+}
+
+AutoCiv <- AutoCiv%>%
+  mutate(Evolution = "ON")%>%
+  mutate(Gun = "Autocannon")%>%
+  mutate(Civilians = "ON")
+
+AC49 <- AutoCiv %>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,TurnRate, Attraction0, Attraction1, Attraction2, file, Evolution, replicate, Civilians, Gun, Offspring, relfit) %>%
+  filter(Generation == 49)
+
+AutoGenAvg <- AutoCiv%>%
+  group_by(Generation, Tower, replicate, Gun, Evolution, Civilians)%>%
+  select(Generation, ID, AsexualReproduction, Fitness, Health, ColliderSurfaceArea, Gun,
+         ScaleType0, SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2, file, replicate, Civilians,
+         Offspring, relfit, Evolution, Gun) %>%
+  summarize(across(c(Health, ColliderSurfaceArea, ScaleType0,
+         SightRange, Armor, Damage, WalkSpeed, RunSpeed, Acceleration,
+         TurnRate, Attraction0, Attraction1, Attraction2), mean))
+
+
+ggplot(AutoCiv, aes(x=Generation, y= ScaleType0))+
+  geom_point(aes(x=Generation, y= ScaleType0, color = SightRange),
+             size=0.1, alpha = 0.1)+
+  geom_smooth()+
+  scale_color_gradient(low = muted("blue"),
+
+  high = "red",
+
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "colour")+
+  facet_wrap(~replicate)
+
+```
+
+
+```{r}
+ggplot(AutoCiv, aes(x=Generation, y= RunSpeed))+
+  geom_point(aes(x=Generation, y= RunSpeed, color = Acceleration),
+                 size = 0.1, alpha = 0.1)+
+  geom_smooth()+
+  scale_color_gradient(low = muted("blue"),
+
+  high = "red",
+
+  space = "Lab",
+  na.value = "grey50",
+  guide = "colourbar",
+  aesthetics = "colour")+
+  facet_wrap(~replicate)
+
+```
+
+
+```{r}
+Twin2<- read.csv("Twin/Gene_Write_File2.csv")
+Twin1<- read.csv("Twin/geneWriteFile.csv")
+Twin3<- read.csv("Twin/geneWriteFile1000.csv")
+
+
+Twin3<-Twin3%>%
+  mutate(Unique.Slime.ID = paste(Wave.Number, ".", Slime.ID))%>%
+  mutate(Unique.Parent.One = paste(Wave.Number-1, ".", Parent.One))%>%
+  mutate(Unique.Parent.Two = paste(Wave.Number-1, ".", Parent.Two))
+
+
+df_parents <- Twin3 %>%
+  select(Unique.Parent.One, Unique.Parent.Two) %>%
+  pivot_longer(cols = everything(), names_to = "parent_type", values_to = "parent_id")
+
+# Count the number of offspring for each parent
+offspring_counts <- df_parents %>%
+  group_by(parent_id) %>%
+  summarise(offspring_count = n(), .groups = "drop")
+
+offspring_counts <- offspring_counts%>%
+  filter(parent_id != "-1 . N/A")
+
+
+offspring_counts<- rename(offspring_counts, Unique.Slime.ID = parent_id)
+
+
+
+Twin3 <- Twin3 %>%
+  left_join(offspring_counts, by = "Unique.Slime.ID")%>%
+  replace_na(list(offspring_count = 0))
+
+Twin3counts<-Twin3%>%
+  group_by(Main.Type, Wave.Number)%>%
+  summarise(mean_Speed = mean(Speed.Trait, na.rm = TRUE), 
+            mean_Resist = mean(Main.Resistance.Trait, na.rm = TRUE), 
+            count = n())
+
+ggplot(Twin3counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))) +
+  geom_col(position = "stack") +
+  labs(x = "Generation", y = "Count", fill = "Main Slime Type") +
+  theme_minimal()
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Main.Resistance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Main.Resistance.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Secondary.Resistance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Secondary.Resistance.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Tower.Attraction.Trait))+
+  geom_point(aes(x=Wave.Number, y= Tower.Attraction.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait))+
+  geom_point(aes(x=Wave.Number, y= Slime.Optimal.Distance.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Speed.Trait))+
+  geom_point(aes(x=Wave.Number, y= Speed.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+
+ggplot(Twin3, aes(x=Wave.Number, y= Turn.Rate.Trait))+
+  geom_point(aes(x=Wave.Number, y= Turn.Rate.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Slime.View.Range.Trait))+
+  geom_point(aes(x=Wave.Number, y= Slime.View.Range.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Tower.View.Range.Trait))+
+  geom_point(aes(x=Wave.Number, y= Tower.View.Range.Trait, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+ggplot(Twin3, aes(x=Wave.Number, y= Player.Distance.Fitness))+
+  geom_point(aes(x=Wave.Number, y= Player.Distance.Fitness, color = offspring_count),
+        size= 0.5,     alpha =0.2)+
+  geom_smooth()+
+  facet_wrap(~Main.Type)+
+  scale_color_continuous(low="blue", high = "red")
+
+
+Twin2Lightning <- Twin2 %>%
+  filter(Main.Type == "Lightning" | Secondary.Type == "Lightning")
+
+ggplot(Twin2Lightning, aes(x=Wave.Number, y= Tower.Attraction.Trait))+
+  geom_point(aes(x=Wave.Number, y= Tower.Attraction.Trait),
+             size=0.5, alpha = 0.5)+
+  geom_smooth()
+
+Twin2counts<-Twin2%>%
+  group_by(Main.Type, Wave.Number)%>%
+  summarise(mean_Speed = mean(Speed.Trait, na.rm = TRUE), 
+            mean_Resist = mean(Main.Resistance.Trait, na.rm = TRUE), 
+            count = n())
+
+ggplot(Twin2counts, aes(x = Wave.Number, y = count, fill = as.factor(Main.Type))) +
+  geom_col(position = "stack") +
+  labs(x = "Generation", y = "Count", fill = "Main Slime Type") +
+  theme_minimal()
+
+
+```
+
+# 
+
+```{r}
+#| eval: false
+
+LastGen <- Twin3
+
+LastGen <- Twin3 %>%
+  select(Wave.Number, Slime.ID, Player.Distance.Fitness, Main.Resistance.Trait, Secondary.Resistance.Trait, Slime.View.Range.Trait, 
+         Tower.View.Range.Trait, Player.View.Range.Trait, Wall.View.Range.Trait, Sheep.View.Range.Trait, Slime.Attraction.Trait, 
+         Tower.Attraction.Trait, Player.Attraction.Trait, Wall.Attraction.Trait, Sheep.Attraction.Trait, Slime.Optimal.Distance.Trait, 
+         Speed.Trait, Turn.Rate.Trait, Sprint.Duration.Trait, Sprint.Cooldown.Trait, offspring_count) %>%
+  filter(Wave.Number == 35)
+
+
+paletteLength <- 50
+myColor <- colorRampPalette(c("blue", "white", "#ED2024"))(paletteLength)
+# length(breaks) == length(paletteLength) + 1
+# use floor and ceiling to deal with even/odd length pallettelengths
+
+
+Heatmap2 <- LastGen %>%
+  select(Player.Distance.Fitness, Main.Resistance.Trait, Secondary.Resistance.Trait, Slime.View.Range.Trait, 
+         Tower.View.Range.Trait, Player.View.Range.Trait, Wall.View.Range.Trait, Sheep.View.Range.Trait, Slime.Attraction.Trait, 
+         Tower.Attraction.Trait, Player.Attraction.Trait, Wall.Attraction.Trait, Sheep.Attraction.Trait, Slime.Optimal.Distance.Trait, 
+         Speed.Trait, Turn.Rate.Trait, Sprint.Duration.Trait, Sprint.Cooldown.Trait)
+
+Heatmap2[,1:18]<- scale(Heatmap2[,1:18])
+
+colnames(Heatmap2) <- c('Fitness', 'Main Resistance', 'Secondary Resistance', 'Slime View Range', 'Tower Viewe Range', 'Player View Range', 
+                        'Wall View Range', 'Sheep View Range', 'Slime Attraction', 'Tower Attraction', 'Player Attraction', 'Wall Attraction',
+                        'Sheep Attraction', 'Slime Optimal Distance', 'Speed', 'Turn Rate', 'Sprint Duration', 'Sprint Cooldown')
+  
+Heatmatrix2 <- as.matrix(Heatmap2)
+
+myBreaks2 <- c(seq(min(Heatmatrix2), 0, length.out=ceiling(paletteLength/2) + 1), seq(max(Heatmatrix2)/paletteLength, max(Heatmatrix2), length.out=floor(paletteLength/2)))
+
+# Generate the heatmap
+pheatmap(Heatmatrix2, 
+         cluster_rows = TRUE, # don't cluster rows
+         cluster_cols = TRUE, # don't cluster columns
+         clustering_distance_cols = "euclidean", 
+         clustering_distance_rows = "euclidean", 
+         clustering_method = "complete",
+         cellheight = 0.75,
+         fontsize_col = 10,
+         color = myColor,
+         breaks = myBreaks2)
+
+```
+
+
+### Educational Outcomes
+
+We reasoned that playing these types of games might have implications for STEM education. The success of the player is based on her comprehension and application of principles of evolutionary biology. The parallels to real world examples are numerous, and include the rapid evolution of antibiotic resistance in microbial pathogens, adaptation of crop pests to chemical and biological control measures, and behavioral adaptation to captivity in domesticated animals.
+
+Adding biological evolution to video games makes the games better for the game player and facilitates player comprehension of complex concepts that are hard to teach.
+
+The basic evolutionary model used in the game studio projects consists of four key elements: selection, inheritance, variation, and time. In each game there is a population of enemies that 'attack' the player. At the end of each wave/generation each enemy is assigned a fitness value based on how well it performed. Typically, this includes a measure of how much damage it did to the player or their resources or lives. However, in many cases the enemies are defeated before they inflict and damage, so fitness also measures how close they came to doing damage, either by shooting close to the player or by getting close to the player. This is necessary to make sure that there is a broad fitness gradient - i.e. that the majority of the enemies do not get assigned the same fitness.
+
+Once the enemies have been assigned a fitness based on their performance against the player the enemies with the highest fitness are *selected* to reproduce. There are a number of difference selection techniques, but all of them combine favoring the most fit individuals to drive evolution with some level of stochasticity to maintain a diverse population. Over selection of a few best individuals can lead to a population with too little diversity to effectively evolve.
+
+The individuals selected to reproduce pass their digital genes into the next generation in a form of *inheritance*. Commonly two selected individuals will mix their digital genes in a form of simulated sexual reproduction. This increases the *variation* in the population by creating new hybrids.
+
+Additionally the newly generated genomes undergo a mutation step in which some of their values have random noise added. This further increase the *variation* in the population of enemies. Mutation is typically applied at rates so that 1-3 gene values vary per individual per generation. This is several orders of magnitude higher that natural, biological evolution, which is necessary to increase the rate of evolution to the point where it is observable to the character and results in change that is meaningful on the timescale of a game that only lasts tens of generations. This higher mutation rate works because there are no lethal mutations in our models, all of the mutations effect traits like speed, strength, resistance, etc. whereas in biological evolution significant mutations are often lethal in the form of failed biological processes.
+
+Finally, this process gets repeated every wave - every evolutionary generation - in the game. This repetition of the evolutionary process over *time* is what allows the enemies to evolve to become tougher opponents.
+
+These basic components: selection, inheritance, variation, and time can be implemented in many games to add an evolutionary component. The critical aspect of evolution over other techniques to scale difficulty is that evolution is drive purely by the enemies performance against the player. If the player implements a novel strategy, whatever enemies perform well against that strategy will reproduce. The game automatically builds in difficulty in response to the player's choices.
+
+Variation Inheritance Selection Time \[done above?\]
+
+### Project Hastur
+
+*Development:* Project Hastur is a tower defense video game developed by students in the Polymorphic Games studio at the University of Idaho. The game features a campaign of 16 original game maps, as well as an experiment mode (described below) that allows the game to serve as a simulation model. Project Hastur was released on the Steam game site on Feb 12th, 2019. The unique feature of Project Hastur is that the enemies in the game model a finite population defined by digital genomes of quantitative traits.
+
+*Gameplay:* In Project Hastur, the player must defend their base against waves of enemies called the Protean Swarm. The player defends their base by placing defensive towers in strategic locations, and the towers each have different capabilities, strengths, and weaknesses. In campaign mode, the player unlocks new game maps and defensive capabilities as they proceed through the story. Each map is defined by victory conditions that involve defeating a set number of enemy generations or building their defenses to specific criteria. Enemies appear in "waves", a classic trope of tower defense games in which the developers script the number and type of enemies that appear over the course of the level. In Project Hastur, however, the enemy waves are part of a generational evolutionary model - each new enemy wave is comprised of the offspring of the most successful parents in the previous wave. In this way, we programmed Project Hastur to become an evolutionary tower defense game in which the enemy population adapts as the game proceeds.
+
+The defensive capabilities of the player include four different categories of tower with qualitative differences in how they interact with the physics engine of the game. These include kinetic, ice, flame, and acid based towers, with each category including 4 different versions of upgrades. In addition, the player can access and upgrade two different abilities that are activated on demand with a cooldown - robotic minions and airstrikes.
